@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { useMutation } from '@apollo/client';
-
 import Auth from '../utils/auth';
 import { ADD_USER } from '../utils/mutations';
 
@@ -30,7 +29,7 @@ const SignupForm = () => {
             Auth.login(result.data.addUser.token);
         } catch (error) {
             console.error(error);
-            setShowAlert(true);
+            // setShowAlert(true);
         }
 
         setUserFormData({
@@ -72,7 +71,7 @@ const SignupForm = () => {
                         required
                     />
                     <button
-                        type='submit' className='signup-login-btn'>Login
+                        type='submit' className='signup-login-btn'>Signup
                     </button>
                 </div>
             </form>

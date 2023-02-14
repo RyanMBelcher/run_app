@@ -1,4 +1,5 @@
 import React from 'react';
+import SignupForm from './components/Signup';
 import './App.css';
 import { ApolloClient, ApolloProvider, InMemoryCache, createHttpLink } from '@apollo/client'
 import { setContext } from '@apollo/client/link/context';
@@ -26,7 +27,7 @@ function App() {
   return (
     <ApolloProvider client={client}>
       <div className="App">
-
+        <SignupForm />
       </div>
     </ApolloProvider>
   );
