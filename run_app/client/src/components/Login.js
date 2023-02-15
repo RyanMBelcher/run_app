@@ -32,12 +32,12 @@ const LoginForm = () => {
             console.error(error);
             // setShowAlert(true);
         }
-    }
 
-    setUserFormData({
-        email: '',
-        password: '',
-    });
+        setUserFormData({
+            email: '',
+            password: '',
+        });
+    }
 
     return (
         <div className='login-form'>
