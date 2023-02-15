@@ -17,7 +17,7 @@ const SignupForm = () => {
 
     const handleFormSubmit = async (e) => {
         e.preventDefault();
-
+        console.log(userFormData);
         const form = e.currentTarget;
         if (form.checkValidity() === false) {
             e.preventDefault();
