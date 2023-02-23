@@ -29,6 +29,38 @@ const resolvers = {
         getAllUsers: async (parent, args) => {
             return await User.find({}).populate('goals').populate('posts').populate('followers');
         },
+        getGoalByUser: async (parent, args, context) => {
+            const goals = await Goal.find({ username: context.user.username }).populate('posts');
+            return goals;
+        },
+        getSingleUser: async (parent, args, context) => {
+            const goal = await Goal.findOne({ _id: goalId }).populate('goals');
+        },
+        getAllPosts: async (parent, args) => {
+            const posts = await Post.find({}).populate('comments').populate('goalId').populate('userId').populate('likes');
+            const sortedPosts = posts.sort((a, b) => a.createdAt - b.createdAt);
+            return sortedPosts;
+        },
+        getPostByUser: async (parent, { username }) => {
+            const posts = await Post.find({ username }).populate('comments').populate('goalId');
+            return posts;
+        },
+        getPostByGoal: async (parent, { goalId }) => {
+            const posts = await Post.find({ goalId }).populate('comments').populate('goalId');
+            return posts;
+        },
+        getSinglePost: async (parent, { postId }) => {
+            const post = await Post.findOne({ _id: postId }).populate('comments').populate('goalId');
+            return post;
+        },
+        getComments: async (parent, { postId }) => {
+            const comments = await Post.findOne({ _id: postId }).populate('comments');
+            return comments;
+        },
+        getFollowers: async (parent, { username }) => {
+            const user = await User.findOne({ username }).populate('followers');
+            return user;
+        }
     },
 
     Mutation: {
