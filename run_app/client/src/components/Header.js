@@ -3,20 +3,21 @@ import Home from './pages/Home';
 import Navbar from './pages/Navbar'
 
 export default function Header() {
-    const [currentPage, setPage] = useState('Home');
-
-    const renderPage = () => {
-        if (currentPage === 'Home') {
-            return <Home />
-        }
-        // if (currentPage === '')
-    };
-
-    const handlePageChange = (page) => setPage(page);
-
     return (
         <div>
-            <Navbar currentPage={currentPage} handlePageChange={handlePageChange} />
+            <nav>
+                <span>
+                    <p>Run App</p>
+                </span>
+                <ul>
+                    <li>
+                        Login
+                    </li>
+                    <li>
+                        Signup
+                    </li>
+                </ul>
+            </nav>
         </div>
-    )
-}
+    );
+};
