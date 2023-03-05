@@ -1,7 +1,7 @@
 import React from 'react';
-import SignupForm from './components/Signup';
-// import LoginForm from './components/Login';
+import Header from './components/Header';
 import './App.css';
+import { ChakraProvider } from '@chakra-ui/react';
 import { ApolloClient, ApolloProvider, InMemoryCache, createHttpLink } from '@apollo/client'
 import { setContext } from '@apollo/client/link/context';
 import Content from './components/Content';
@@ -27,13 +27,14 @@ const client = new ApolloClient({
 
 function App() {
   return (
-    <ApolloProvider client={client}>
-      <div className="App">
-        {/* <SignupForm /> */}
-        {/* <LoginForm /> */}
-        <Content />
-      </div>
-    </ApolloProvider>
+    <ChakraProvider>
+      <ApolloProvider client={client}>
+        <div className="App">
+          <Header />
+          <Content />
+        </div>
+      </ApolloProvider>
+    </ChakraProvider>
   );
 }
 
