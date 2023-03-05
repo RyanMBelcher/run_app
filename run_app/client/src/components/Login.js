@@ -10,7 +10,8 @@ import {
     VStack,
     Flex,
     Link,
-    Box
+    Box,
+    Spacer
 } from '@chakra-ui/react';
 import { LOGIN_USER } from '../utils/mutations';
 import Auth from '../utils/auth';
@@ -51,16 +52,18 @@ const LoginForm = () => {
     }
 
     return (
-        <Flex>
-            <VStack>
+        <Flex align='center' justify='center'>
+            <VStack
                 justify={'center'}
+                flexDir={'column'}
+            >
                 <Stack
                     flexDir='column'
                     justifyContent='center'
                     alignItems='center'
                 >
-                    <Container>
-                        <Box display='flex'>
+                    <Container display='flex' justifyContent='center' alignItems='center'>
+                        <Box border='2px' borderRadius='md' p='5' mt='5' display='flex'>
                             <form onSubmit={handleFormSubmit}>
                                 <FormControl id='email' isRequired>
                                     <FormLabel htmlFor='email'>Email</FormLabel>
@@ -72,6 +75,7 @@ const LoginForm = () => {
                                         value={userFormData.email}
                                         required
                                     />
+                                    <Spacer h='5' />
                                     <FormLabel htmlFor='password'>Password</FormLabel>
                                     <Input
                                         type='password'
@@ -81,10 +85,12 @@ const LoginForm = () => {
                                         value={userFormData.password}
                                         required
                                     />
-                                    <Button type='submit'
+                                    <Button
+                                        type='submit'
                                         // as={ReactLink}
                                         // to='/'
-                                        size='md'
+                                        p={5}
+                                        m={5}
                                     >
                                         Login
                                     </Button>
