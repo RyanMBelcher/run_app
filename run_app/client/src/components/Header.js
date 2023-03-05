@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
-import Home from './pages/Home';
-import Navbar from './pages/Navbar'
+// import Home from './pages/Home';
+// import Login from './Login';
+// import Signup from './Signup';
 
 export default function Header() {
     return (
@@ -11,10 +12,10 @@ export default function Header() {
                 </span>
                 <ul>
                     <li>
-                        Login
+                        <a href='/login'>Login</a>
                     </li>
                     <li>
-                        Signup
+                        <a href='/signup'>Signup</a>
                     </li>
                 </ul>
             </nav>
