@@ -2,7 +2,19 @@ import React, { useState } from 'react';
 import { useMutation } from '@apollo/client';
 import Auth from '../utils/auth';
 import { ADD_USER } from '../utils/mutations';
-
+import {
+    Input,
+    Container,
+    Button,
+    FormControl,
+    FormLabel,
+    Stack,
+    VStack,
+    Flex,
+    Link,
+    Box,
+    Spacer
+} from '@chakra-ui/react';
 
 const SignupForm = () => {
     const [userFormData, setUserFormData] = useState({ username: '', email: '', password: '' });
@@ -40,42 +52,63 @@ const SignupForm = () => {
     };
 
     return (
-        <div className='login-form'>
-            <form onSubmit={handleFormSubmit}>
-                <div className='login-input'>
-                    <label htmlFor='username'>Username</label>
-                    <input
-                        type='text'
-                        placeholder='Your Username'
-                        name='username'
-                        onChange={handleInputChange}
-                        value={userFormData.username}
-                        required
-                    />
-                    <label htmlFor='email'>Email</label>
-                    <input
-                        type='email'
-                        placeholder='Your email address'
-                        name='email'
-                        onChange={handleInputChange}
-                        value={userFormData.email}
-                        required
-                    />
-                    <label htmlFor='password'>Password</label>
-                    <input
-                        type='password'
-                        placeholder='Your password'
-                        name='password'
-                        onChange={handleInputChange}
-                        value={userFormData.password}
-                        required
-                    />
-                    <button
-                        type='submit' className='signup-login-btn'>Signup
-                    </button>
-                </div>
-            </form>
-        </div>
+        <Flex align='center' justify='center'>
+            <VStack
+                justify={'center'}
+                flexDir={'column'}
+            >
+                <Stack
+                    flexDir='column'
+                    justifyContent='center'
+                    alignItems='center'
+                >
+                    <Container>
+                        <Box border='2px' borderRadius='md' p='5' mt='5' display='flex'>
+                            <form onSubmit={handleFormSubmit}>
+                                <FormControl id='username' isRequired>
+                                    <FormLabel htmlFor='username'>Username</FormLabel>
+                                    <Input
+                                        type='text'
+                                        placeholder='Your Username'
+                                        name='username'
+                                        onChange={handleInputChange}
+                                        value={userFormData.username}
+                                        required
+                                    />
+                                    <Spacer h='5' />
+                                    <FormLabel htmlFor='email'>Email</FormLabel>
+                                    <Input
+                                        type='email'
+                                        placeholder='Your email address'
+                                        name='email'
+                                        onChange={handleInputChange}
+                                        value={userFormData.email}
+                                        required
+                                    />
+                                    <Spacer h='5' />
+                                    <FormLabel htmlFor='password'>Password</FormLabel>
+                                    <Input
+                                        type='password'
+                                        placeholder='Your password'
+                                        name='password'
+                                        onChange={handleInputChange}
+                                        value={userFormData.password}
+                                        required
+                                    />
+                                    <Button
+                                        type='submit'
+                                        p={5}
+                                        m={5}
+                                    >
+                                        Signup
+                                    </Button>
+                                </FormControl>
+                            </form>
+                        </Box>
+                    </Container>
+                </Stack>
+            </VStack>
+        </Flex>
     );
 };
 
