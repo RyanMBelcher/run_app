@@ -11,8 +11,10 @@ import {
     Flex,
     Link,
     Box,
-    Spacer
+    Spacer,
+    Heading
 } from '@chakra-ui/react';
+import personrunning from '../images/personrunning.png'
 import { LOGIN_USER } from '../utils/mutations';
 import Auth from '../utils/auth';
 
@@ -52,7 +54,15 @@ const LoginForm = () => {
     }
 
     return (
-        <Flex align='center' justify='center'>
+        <Flex
+            w={'full'}
+            h={'100vh'}
+            align='center'
+            justify='center'
+            backgroundImage={personrunning}
+            backgroundSize={'cover'}
+            backgroundPosition={'center'}
+        >
             <VStack
                 justify={'center'}
                 flexDir={'column'}
@@ -63,7 +73,8 @@ const LoginForm = () => {
                     alignItems='center'
                 >
                     <Container display='flex' justifyContent='center' alignItems='center'>
-                        <Box border='2px' borderRadius='md' p='5' mt='5' display='flex'>
+                        <Box border='2px' borderRadius='md' p='5' mt='5' display='flex' flexDirection='column'>
+                            <Heading mb={4} borderBottom='1px' backgroundColor='black' color='white'>Log In</Heading>
                             <form onSubmit={handleFormSubmit}>
                                 <FormControl id='email' isRequired>
                                     <FormLabel htmlFor='email'>Email</FormLabel>

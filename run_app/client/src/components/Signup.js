@@ -13,8 +13,10 @@ import {
     Flex,
     Link,
     Box,
-    Spacer
+    Spacer,
+    Heading
 } from '@chakra-ui/react';
+import manrunning from '../images/manrunning.png'
 
 const SignupForm = () => {
     const [userFormData, setUserFormData] = useState({ username: '', email: '', password: '' });
@@ -52,7 +54,16 @@ const SignupForm = () => {
     };
 
     return (
-        <Flex align='center' justify='center'>
+        <Flex
+            w={'full'}
+            h={'100vh'}
+            align='center'
+            justify='center'
+            backgroundImage={manrunning}
+            backgroundSize={'cover'}
+            backgroundPosition={'center'}
+            backgroundRepeat={'no-repeat'}
+        >
             <VStack
                 justify={'center'}
                 flexDir={'column'}
@@ -63,7 +74,8 @@ const SignupForm = () => {
                     alignItems='center'
                 >
                     <Container>
-                        <Box border='2px' borderRadius='md' p='5' mt='5' display='flex'>
+                        <Box border='2px' borderRadius='md' p='5' mt='5' display='flex' flexDirection='column'>
+                            <Heading mb={4} borderBottom='1px' backgroundColor='black' color='white'>Sign Up</Heading>
                             <form onSubmit={handleFormSubmit}>
                                 <FormControl id='username' isRequired>
                                     <FormLabel htmlFor='username'>Username</FormLabel>
