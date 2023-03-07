@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import Home from '../components/pages/Home';
+import Landing from './pages/Landing';
 import Login from '../components/Login';
 import Signup from '../components/Signup';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
@@ -8,7 +8,7 @@ function Content() {
     const router = createBrowserRouter([
         {
             path: '/',
-            element: <Home />,
+            element: <Landing />,
         },
         {
             path: '/login',

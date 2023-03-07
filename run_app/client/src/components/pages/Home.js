@@ -1,14 +1,11 @@
-import React from 'react';
-import '../../index.css'
-// import Auth from '../../utils/auth';
-import man_running_on_bridge from '../../images/man_running_on_bridge.png';
+import React, { useState } from 'react';
+
+
+
+import Auth from '../../utils/auth';
+import { GET_ME, GET_GOAL_BY_USER, GET_POSTS_BY_GOAL, GET_SINGLE_GOAL } from '../../utils/queries';
+import { ADD_GOAL, ADD_POST, DELETE_GOAL, DELETE_POST, EDIT_POST, EDIT_PROFILE } from '../../utils/mutations';
 
 export default function Home() {
-    return (
-        <div>
-            <h1 className='text-3xl font-bold underline'>Welcome to the App!</h1>
-            <img src={man_running_on_bridge}>
-            </img>
-        </div>
-    )
+    const [seeGoals]
 }
