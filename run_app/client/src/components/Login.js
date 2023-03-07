@@ -71,13 +71,14 @@ const LoginForm = () => {
                     flexDir='column'
                     justifyContent='center'
                     alignItems='center'
+                    bgGradient={'linear(to-br, blackAlpha.800, transparent)'}
                 >
                     <Container display='flex' justifyContent='center' alignItems='center'>
-                        <Box border='2px' borderRadius='md' p='5' mt='5' display='flex' flexDirection='column'>
-                            <Heading mb={4} borderBottom='1px' backgroundColor='black' color='white'>Log In</Heading>
+                        <Box border='2px' borderRadius='md' borderColor='#0B515B' p='5' mt='5' display='flex' flexDirection='column'>
+                            <Heading mb={4} borderBottom='1px' backgroundColor='#FDC500' color='black'>Log In</Heading>
                             <form onSubmit={handleFormSubmit}>
                                 <FormControl id='email' isRequired>
-                                    <FormLabel htmlFor='email'>Email</FormLabel>
+                                    <FormLabel htmlFor='email' color='#FFCE1F'>Email</FormLabel>
                                     <Input
                                         type='email'
                                         placeholder='Your email address'
@@ -85,9 +86,10 @@ const LoginForm = () => {
                                         onChange={handleInputChange}
                                         value={userFormData.email}
                                         required
+                                        color='#FFF'
                                     />
                                     <Spacer h='5' />
-                                    <FormLabel htmlFor='password'>Password</FormLabel>
+                                    <FormLabel htmlFor='password' color='#FFCE1F'>Password</FormLabel>
                                     <Input
                                         type='password'
                                         placeholder='Your password'
@@ -95,9 +97,11 @@ const LoginForm = () => {
                                         onChange={handleInputChange}
                                         value={userFormData.password}
                                         required
+                                        color='#FFF'
                                     />
                                     <Button
                                         type='submit'
+                                        backgroundColor='#FDC500'
                                         // as={ReactLink}
                                         // to='/'
                                         p={5}

@@ -19,7 +19,7 @@ import {
 
 export default function Header() {
     return (
-        <Flex minWidth='max-content' alignItems='center' gap='2'>
+        <Flex minWidth='max-content' alignItems='center' gap='2' backgroundColor='#FDC500'>
             <Box p='2'>
                 <Heading size='md'><a href='/'>Run App</a></Heading>
             </Box>
