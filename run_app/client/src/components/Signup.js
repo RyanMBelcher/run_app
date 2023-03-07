@@ -72,13 +72,14 @@ const SignupForm = () => {
                     flexDir='column'
                     justifyContent='center'
                     alignItems='center'
+                    bgGradient={'linear(to-br, blackAlpha.800, transparent)'}
                 >
                     <Container>
-                        <Box border='2px' borderRadius='md' p='5' mt='5' display='flex' flexDirection='column'>
-                            <Heading mb={4} borderBottom='1px' backgroundColor='black' color='white'>Sign Up</Heading>
+                        <Box border='2px' borderRadius='md' borderColor='#0B515B' p='5' mt='5' display='flex' flexDirection='column'>
+                            <Heading mb={4} borderBottom='1px' backgroundColor='#FDC500' color='Black'>Sign Up</Heading>
                             <form onSubmit={handleFormSubmit}>
                                 <FormControl id='username' isRequired>
-                                    <FormLabel htmlFor='username'>Username</FormLabel>
+                                    <FormLabel htmlFor='username' color='#FFCE1F'>Username</FormLabel>
                                     <Input
                                         type='text'
                                         placeholder='Your Username'
@@ -88,7 +89,7 @@ const SignupForm = () => {
                                         required
                                     />
                                     <Spacer h='5' />
-                                    <FormLabel htmlFor='email'>Email</FormLabel>
+                                    <FormLabel htmlFor='email' color='#FDC500'>Email</FormLabel>
                                     <Input
                                         type='email'
                                         placeholder='Your email address'
@@ -98,7 +99,7 @@ const SignupForm = () => {
                                         required
                                     />
                                     <Spacer h='5' />
-                                    <FormLabel htmlFor='password'>Password</FormLabel>
+                                    <FormLabel htmlFor='password' color='#FFCE1F'>Password</FormLabel>
                                     <Input
                                         type='password'
                                         placeholder='Your password'
@@ -109,6 +110,7 @@ const SignupForm = () => {
                                     />
                                     <Button
                                         type='submit'
+                                        backgroundColor='#FDC500'
                                         p={5}
                                         m={5}
                                     >

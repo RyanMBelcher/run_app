@@ -64,9 +64,9 @@ export const REMOVE_FOLLOWER = gql`
     }
  `;
 
-export const ADD_GOAL = gql`
-    
- `;
+// export const ADD_GOAL = gql`
+
+//  `;
 
 export const ADD_POST = gql`
     mutation addPost($postInfo: AddPostInfo) {
@@ -100,9 +100,9 @@ export const ADD_COMMENT = gql`
     }
  `;
 
-export const DELETE_GOAL = gql`
- 
- `;
+// export const DELETE_GOAL = gql`
+
+//  `;
 
 export const DELETE_POST = gql`
     mutation deletePost($postId: String!) {
