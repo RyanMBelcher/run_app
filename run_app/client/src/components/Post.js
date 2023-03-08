@@ -17,12 +17,13 @@ import {
     CheckIcon,
     ChatIcon
 } from '@chakra-ui/icons';
+import Pennsylvania from '../images/Pennsylvania.png';
 
 export default function Post() {
 
 
     return (
-        <Card maxW='md'>
+        <Card w='500px' h='550px' alignItems='center' p='20px'>
             <CardHeader>
                 <Flex flex='1' gap='4' alignItems='center' flexWrap='wrap'>
                     <Avatar />
@@ -39,8 +40,8 @@ export default function Post() {
                 </Text>
             </CardBody>
             <Image
-                objectFit='cover'
-                src='https://gisgeography.com/pennsylvania-map/'
+                // objectFit='cover'
+                src={Pennsylvania}
                 alt='map of Pennsylvania'
             />
 

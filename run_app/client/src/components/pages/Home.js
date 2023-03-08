@@ -9,7 +9,10 @@ import {
     Flex,
     Heading,
     Avatar,
-    Text
+    Text,
+    Stack,
+    VStack,
+    Spacer
 } from '@chakra-ui/react';
 import Post from '../Post';
 import Auth from '../../utils/auth';
@@ -17,21 +20,51 @@ import Auth from '../../utils/auth';
 export default function Home() {
 
     return (
-        <Flex>
-            <Card maxW='md' maxH='md'>
+        <Flex
+            justifyContent='space-evenly'
+            w={'full'}
+            h={'100vh'}
+            backgroundColor='#edede4'
+            pt='15px'
+        >
+            <Stack>
+                <VStack>
+                    <Card w='250px' h='250px' alignItems='center'>
+                        <CardHeader>
+                            <Flex spacing='4'>
+                                <Flex flex='1' gap='4' alignItems='center' flexWrap='wrap'>
+                                    <Avatar />
+                                    <Heading size='md'>{Auth.getProfile().data.username}</Heading>
+                                </Flex>
+                            </Flex>
+                        </CardHeader>
+                        <CardBody>
+                            <Text>Followers</Text>
+                            <Text>Following</Text>
+                        </CardBody>
+                    </Card>
+                    <Spacer />
+                    <Card w='250px' h='500px' alignItems='center'>
+                        <CardHeader>
+                            <Flex spacing='4'>
+                                <Flex flex='1' gap='4' alignItems='center' flexWrap='wrap'>
+                                    <Heading size='md'>Current Goal</Heading>
+                                </Flex>
+                            </Flex>
+                        </CardHeader>
+                    </Card>
+                </VStack>
+            </Stack>
+            <Post />
+            <Card w='250px' h='750px' alignItems='center'>
                 <CardHeader>
                     <Flex spacing='4'>
                         <Flex flex='1' gap='4' alignItems='center' flexWrap='wrap'>
-                            <Avatar />
-                            <Heading size='md'>{Auth.getProfile().data.username}</Heading>
+                            <Heading size='md'>Recent Activity</Heading>
                         </Flex>
                     </Flex>
                 </CardHeader>
-                <CardBody>
-
-                </CardBody>
             </Card>
-            <Post />
         </Flex>
     )
 
