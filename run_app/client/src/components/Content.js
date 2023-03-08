@@ -2,6 +2,7 @@ import React, { useContext } from 'react';
 import Landing from './pages/Landing';
 import Login from '../components/Login';
 import Signup from '../components/Signup';
+import Home from './pages/Home';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 
 function Content() {
@@ -17,6 +18,10 @@ function Content() {
         {
             path: '/signup',
             element: <Signup />
+        },
+        {
+            path: '/home',
+            element: <Home />
         }
     ]);
 
