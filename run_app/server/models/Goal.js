@@ -6,7 +6,7 @@ const goalSchema = new Schema(
         // connection to the map?
         // post ref Post
         // username
-    }
+    },
     {
         toJSON: {
             virtuals: true,
