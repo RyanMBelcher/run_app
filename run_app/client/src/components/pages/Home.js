@@ -29,7 +29,7 @@ export default function Home() {
         >
             <Stack>
                 <VStack>
-                    <Card w='250px' h='250px' alignItems='center'>
+                    <Card w='250px' h='250px'>
                         <CardHeader>
                             <Flex spacing='4'>
                                 <Flex flex='1' gap='4' alignItems='center' flexWrap='wrap'>
@@ -39,8 +39,12 @@ export default function Home() {
                             </Flex>
                         </CardHeader>
                         <CardBody>
-                            <Text>Followers</Text>
-                            <Text>Following</Text>
+                            <Flex spacing='4'>
+                                <Flex flex='1' gap='4' flexWrap='wrap' flexDirection='column' alignContent='flex-start'>
+                                    <Text>Followers: </Text>
+                                    <Text>Following: </Text>
+                                </Flex>
+                            </Flex>
                         </CardBody>
                     </Card>
                     <Spacer />
