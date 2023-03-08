@@ -6,26 +6,33 @@ import {
     CardHeader,
     CardBody,
     Box,
-    Text,
     Flex,
     Heading,
-    Avatar
+    Avatar,
+    Text
 } from '@chakra-ui/react';
+import Post from '../Post';
 import Auth from '../../utils/auth';
 
 export default function Home() {
 
     return (
-        <Card maxW='md' maxH='md'>
-            <CardHeader>
-                <Flex spacing='4'>
-                    <Flex flex='1' gap='4' alignItems='center' flexWrap='wrap'>
-                        <Avatar />
-                        <Heading size='md'>{Auth.getProfile().data.username}</Heading>
+        <Flex>
+            <Card maxW='md' maxH='md'>
+                <CardHeader>
+                    <Flex spacing='4'>
+                        <Flex flex='1' gap='4' alignItems='center' flexWrap='wrap'>
+                            <Avatar />
+                            <Heading size='md'>{Auth.getProfile().data.username}</Heading>
+                        </Flex>
                     </Flex>
-                </Flex>
-            </CardHeader>
-        </Card>
+                </CardHeader>
+                <CardBody>
+
+                </CardBody>
+            </Card>
+            <Post />
+        </Flex>
     )
 
 };
