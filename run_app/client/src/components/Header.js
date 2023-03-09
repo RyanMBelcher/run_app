@@ -13,6 +13,7 @@ import {
     Button,
     ButtonGroup
 } from '@chakra-ui/react'
+import Auth from '../utils/auth';
 // import Home from './pages/Home';
 // import Login from './Login';
 // import Signup from './Signup';
@@ -25,8 +26,21 @@ export default function Header() {
             </Box>
             <Spacer />
             <ButtonGroup gap='2' mr='3'>
-                <a href='/signup'>Sign Up</a>
-                <a href='/login'>Log in</a>
+                {Auth.loggedIn() ? (
+                    <>
+                        <a href='/me'>
+                            My Profile
+                        </a>
+                        <a href='/' onClick={Auth.logout}>
+                            Log Out
+                        </a>
+                    </>
+                ) : (
+                    <>
+                        <a href='/signup'>Sign Up</a>
+                        <a href='/login'>Log in</a>
+                    </>
+                )}
             </ButtonGroup>
         </Flex>
     );

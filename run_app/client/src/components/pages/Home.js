@@ -34,7 +34,9 @@ export default function Home() {
                             <Flex spacing='4'>
                                 <Flex flex='1' gap='4' alignItems='center' flexWrap='wrap'>
                                     <Avatar />
-                                    <Heading size='md'>{Auth.getProfile().data.username}</Heading>
+                                    <a href='/me'>
+                                        <Heading size='md'>{Auth.getProfile().data.username}</Heading>
+                                    </a>
                                 </Flex>
                             </Flex>
                         </CardHeader>
