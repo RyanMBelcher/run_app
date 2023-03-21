@@ -27,6 +27,10 @@ function Content() {
         {
             path: '/me',
             element: <ProfilePage />
+        },
+        {
+            path: '/profiles/:username',
+            element: <ProfilePage />
         }
     ]);
 

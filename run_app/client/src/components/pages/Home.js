@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useParams } from 'react-router-dom';
 import { useQuery, useMutation, useLazyQuery } from '@apollo/client';
 import { } from '../../utils/queries';
 import {
@@ -18,6 +19,8 @@ import Post from '../Post';
 import Auth from '../../utils/auth';
 
 export default function Home() {
+
+    const { username: userParam } = useParams
 
     return (
         <Flex

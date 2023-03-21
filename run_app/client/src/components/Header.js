@@ -28,6 +28,9 @@ export default function Header() {
             <ButtonGroup gap='2' mr='3'>
                 {Auth.loggedIn() ? (
                     <>
+                        <a href='/home'>
+                            Home
+                        </a>
                         <a href='/me'>
                             My Profile
                         </a>

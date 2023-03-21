@@ -32,6 +32,12 @@ const userSchema = new Schema(
                 ref: 'Goal'
             }
         ],
+        posts: [
+            {
+                type: Schema.Types.ObjectId,
+                ref: 'Post'
+            }
+        ],
         followers: [
             {
                 type: Schema.Types.ObjectId,
@@ -58,7 +64,19 @@ userSchema.pre('save', async function (next) {
 
 userSchema.methods.isCorrectPassword = async function (password) {
     return bcrypt.compare(password, this.password);
-}
+};
+
+userSchema.virtual('goalCount').get(function () {
+    return this.goals.length;
+});
+
+userSchema.virtual('postCount').get(function () {
+    return this.posts.length;
+});
+
+userSchema.virtual('followerCount').get(function () {
+    return this.followers.length;
+});
 
 const User = model('User', userSchema);
 

@@ -12,10 +12,10 @@ const resolvers = {
             }
             throw new AuthenticationError('You must be logged in!');
         },
-        // getSingleUser: async (parent, { username }, context) => {
-        //     const user = await User.findOne({ username }).populate('goals').populate('posts').populate('followers');
-        //     return user;
-        // },
+        getSingleUser: async (parent, { username }, context) => {
+            const user = await User.findOne({ username }).populate('goals').populate('posts').populate('followers');
+            return user;
+        },
         // getAllUsers: async (parent, args) => {
         //     return await User.find({}).populate('goals').populate('posts').populate('followers');
         // },
@@ -76,23 +76,84 @@ const resolvers = {
             return { token, user };
         },
 
-        // editProfile: async (parent, args, context) => {
-        //     const updatedUser = await User.findOneAndUpdate(
-        //         { username: args.username || context.user.username },
-        //         {
-        //             $set:
-        //             {
-        //                 bio: args.bio,
-        //                 profileImage: args.profileImage
-        //             }
-        //         },
-        //         {
-        //             new: true,
-        //             runValidators: true,
-        //         }
-        //     );
-        //     return updatedUser;
-        // },
+        editProfile: async (parent, args, context) => {
+            const updatedUser = await User.findOneAndUpdate(
+                { username: args.username || context.user.username },
+                {
+                    $set:
+                    {
+                        bio: args.bio,
+                        profileImage: args.profileImage
+                    }
+                },
+                {
+                    new: true,
+                    runValidators: true,
+                }
+            );
+            return updatedUser;
+        },
+
+        addComment: async (parent, args, context) => {
+            const comment = await Post.findOneAndUpdate(
+                { _id: args.postId },
+                {
+                    $addToSet: {
+                        comments: {
+                            text: args.text,
+                            username: args.username || context.user.username,
+                            postId: args.postId
+                        }
+                    }
+                },
+                {
+                    new: true,
+                    runValidators: true.
+                }
+            ).populate('comments');
+            return comment;
+        },
+
+        deleteComment: async (parent, { commentId, postId }) => {
+            return await Post.findOneAndUpdate(
+                { _id: postId },
+                { $pull: { comments: { _id: commentId } } },
+                { new: true }
+            ).populate('tripId');
+        },
+
+        toggleLikePost: async (parent, args, context) => {
+            const like = await Post.findOneAndUpdate({ _id: args.postId });
+
+            if (like.likes.includes(context.user._id)) {
+                return await Post.findOneAndUpdate(
+                    { _id: args.postId },
+                    {
+                        $pull: {
+                            likes: args.userId || context.user._id
+                        }
+                    },
+                    {
+                        new: true,
+                        runValidators: true,
+                    }
+                ).populate('likes')
+            } else {
+                return await Post.findOneAndUpdate(
+                    { _id: args.postId },
+                    {
+                        $addToSet: {
+                            likes: args.userId || context.user._id
+                        }
+                    },
+                    {
+                        new: true,
+                        runValidators: true
+                    }
+                ).populate('likes');
+            }
+        }
+
         // addFollower: async (parent, args, context) => {
         //     const updatedUser = await User.findOneAndUpdate(
         //         { username: args.userId || context.userId },

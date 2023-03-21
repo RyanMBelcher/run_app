@@ -25,16 +25,16 @@ export const ADD_USER = gql`
     }
 `;
 
-// export const EDIT_PROFILE = gql`
-//     mutation editProfile($bio: String, $profileImage: String, $username: String) {
-//         editProfile(bio: $bio, profileImage: $profileImage, username: $username) {
-//             _id
-//             username
-//             bio
-//             profileImage
-//         }
-//     }
-// `;
+export const EDIT_PROFILE = gql`
+    mutation editProfile($bio: String, $profileImage: String, $username: String) {
+        editProfile(bio: $bio, profileImage: $profileImage, username: $username) {
+            _id
+            username
+            bio
+            profileImage
+        }
+    }
+`;
 
 // export const ADD_FOLLOWER = gql`
 //     mutation addFollower($userId: String, $followUsername: String) {
@@ -78,27 +78,27 @@ export const ADD_USER = gql`
 //     }
 //  `;
 
-// export const ADD_COMMENT = gql`
-//     mutation addComment($text: String!, $username: String!, $postId: String) {
-//         addComment(text: $text, username: $username, postId: $postId) {
-//             _id
-//             username
-//             title
-//             description
-//             image
-//             likes {
-//                 _id
-//             }
-//             comments {
-//                 _id
-//                 text
-//                 username
-//                 createdAt
-//             }
-//             createdAt
-//         }
-//     }
-//  `;
+export const ADD_COMMENT = gql`
+    mutation addComment($text: String!, $username: String!, $postId: String) {
+        addComment(text: $text, username: $username, postId: $postId) {
+            _id
+            username
+            title
+            description
+            image
+            likes {
+                _id
+            }
+            comments {
+                _id
+                text
+                username
+                createdAt
+            }
+            createdAt
+        }
+    }
+ `;
 
 // // export const DELETE_GOAL = gql`
 
@@ -113,30 +113,30 @@ export const ADD_USER = gql`
 //     }
 //  `;
 
-// export const DELETE_COMMENT = gql`
-//     mutation deleteComment($commentId: String!, $postId: String!) {
-//         deleteComment(commentId: $commentId, postId: $postID) {
-//             _id
-//             username
-//             title
-//             description
-//             image
-//             likes {
-//                 _id
-//             }
-//             comments {
-//                 _id
-//                 createdAt
-//                 text
-//             }
-//             createdAt
-//             tripId {
-//                 _id
-//                 location
-//             }
-//         }
-//     }
-//  `;
+export const DELETE_COMMENT = gql`
+    mutation deleteComment($commentId: String!, $postId: String!) {
+        deleteComment(commentId: $commentId, postId: $postID) {
+            _id
+            username
+            title
+            description
+            image
+            likes {
+                _id
+            }
+            comments {
+                _id
+                createdAt
+                text
+            }
+            createdAt
+            tripId {
+                _id
+                location
+            }
+        }
+    }
+ `;
 
 // export const EDIT_POST = gql`
 //     mutation editPost($postId: String, $title: String, $description: String) {
@@ -148,3 +148,23 @@ export const ADD_USER = gql`
 //         }
 //     }
 //  `;
+
+export const TOGGLE_LIKE_POST = gql`
+    mutation toggleLikePost($postId: String, $userId: String) {
+        toggleLikePost(postId: $postId, userId: $userId) {
+            _id
+            username
+            likes {
+                _id
+                username
+            }
+            likesCount
+            userId {
+                _id
+            }
+            goalId {
+                _id
+            }
+        }
+    }
+`;

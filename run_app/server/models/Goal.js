@@ -2,10 +2,28 @@ const { Schema, model } = require('mongoose');
 
 const goalSchema = new Schema(
     {
-        // goal title
-        // connection to the map?
-        // post ref Post
-        // username
+        startDate: {
+            type: Date
+        },
+        endDate: {
+            type: Date
+        },
+        status: {
+            type: String
+        },
+        currentLocation: {
+            type: [Number]
+        },
+        currentDistance: {
+            type: Number
+        },
+        username: {
+            type: String
+        },
+        goalDef: {
+            type: Schema.Types.ObjectId,
+            ref: 'GoalDefinition'
+        }
     },
     {
         toJSON: {
