@@ -23,9 +23,14 @@ export const GET_ME = gql`
                 _id
                 username
             }
+            following {
+                _id
+                username
+            }
             goalCount
             postCount
             followerCount
+            followingCount
         }
     }
 `;
@@ -51,7 +56,12 @@ export const GET_SINGLE_USER = gql`
                 _id
                 username
             }
+            following {
+                _id
+                username
+            }
             followerCount
+            followingCount
         }
     }
 `;
@@ -97,6 +107,7 @@ export const GET_ALL_POSTS = gql`
             username
             title
             description
+            distance
             likes {
                 _id
                 username

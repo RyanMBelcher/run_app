@@ -29,11 +29,15 @@ import {
 } from '@chakra-ui/icons';
 
 import { ADD_FOLLOWER, EDIT_PROFILE } from '../utils/mutations';
+import { GET_ME, GET_SINGLE_USER } from '../utils/queries';
 
 
 export default function Profile({ profile }) {
 
     const { username: userParam } = useParams()
+    const { loading, data } = useQuery(!userParam ? GET_ME : GET_SINGLE_USER, {
+        variables: { username: userParam },
+    });
 
     const { isOpen: isOpenProfile, onOpen: onOpenProfile, onClose: onCloseProfile } = useDisclosure();
     const { isOpen: isOpenGoal, onOpen: onOpenGoal, onClose: onCloseGoal } = useDisclosure();
@@ -103,16 +107,20 @@ export default function Profile({ profile }) {
                             <Avatar />{profile.profileImage}
                             <a href='/me'>
                                 <Heading size='md'>{profile.username}</Heading>
-                                <Button
-                                    flex='1'
-                                    variant='ghost'
-                                    leftIcon={<AddIcon />}
-                                    backgroundColor='#FDC500'
-                                    _hover={{ bg: '#FFCE1F' }}
-                                    onClick={followUser}
-                                >
-                                    Follow
-                                </Button >
+                                {userParam &&
+                                    (
+                                        <Button
+                                            flex='1'
+                                            variant='ghost'
+                                            leftIcon={<AddIcon />}
+                                            backgroundColor='#FDC500'
+                                            _hover={{ bg: '#FFCE1F' }}
+                                            onClick={followUser}
+                                        >
+                                            Follow
+                                        </Button >
+                                    )
+                                }
                             </a>
                         </Flex>
                     </Flex>
@@ -121,6 +129,7 @@ export default function Profile({ profile }) {
                     <Flex spacing='4'>
                         <Flex flex='1' gap='4' flexWrap='wrap' flexDirection='column' alignContent='flex-start'>
                             <Text>Followers: {profile.followerCount} </Text>
+                            <Text>Following: {profile.followingCount}</Text>
                             <Text>Goals: {profile.goalCount}</Text>
                             <Text>Location: {profile.location} </Text>
                             <Text>Bio: {profile.bio} </Text>

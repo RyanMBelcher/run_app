@@ -12,9 +12,11 @@ const typeDefs = gql`
         goals: [Goal]
         posts: [Post]
         followers: [User]
+        following: [User]
         goalCount: Int
         postCount: Int
         followerCount: Int
+        followingCount: Int
     }
 
     type Goal {
@@ -41,9 +43,12 @@ const typeDefs = gql`
         _id: ID!
         title: String
         description: String
+        distance: Int
         image: String
         likes: [User]
         likesCount: Int
+        comments: [Comment]
+        commentCount: Int
         createdAt: String
         username: String
         userId: User

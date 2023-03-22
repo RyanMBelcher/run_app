@@ -33,12 +33,17 @@ import {
 import Auth from '../../utils/auth';
 import Profile from '../Profile';
 import Post from '../Post';
-import { GET_ME, GET_SINGLE_USER, GET_GOALS_BY_USER, GET_SINGLE_GOAL } from '../../utils/queries';
+import { GET_ME, GET_SINGLE_USER, GET_GOALS_BY_USER, GET_SINGLE_GOAL, GET_ALL_POSTS } from '../../utils/queries';
 import { ADD_GOAL, ADD_POST, DELETE_GOAL, DELETE_POST, EDIT_POST, EDIT_PROFILE, ADD_FOLLOWER, REMOVE_FOLLOWER } from '../../utils/mutations';
 
 import Map from '../Map';
 
 export default function ProfilePage() {
+
+
+    const { loading: loadingPosts, data: postsData } = useQuery(GET_ALL_POSTS);
+    const posts = postsData?.getAllPosts || [];
+    console.log('posts', postsData);
 
     const [seeGoals, setSeeGoals] = useState(true);
 
@@ -85,7 +90,7 @@ export default function ProfilePage() {
         >
 
             <Profile profile={profile} />
-            <Post />
+            <Post posts={posts} />
 
             {/* <Card ml='15px' w='500px' h='500px'>
                 <CardHeader>

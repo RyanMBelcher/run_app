@@ -21,11 +21,11 @@ import { GET_GOAL_BY_USER, GET_SINGLE_GOAL } from '../../utils/queries';
 
 export default function Home() {
 
-    // const { loading, data } = useQuery(GET_ALL_POSTS);
-    // const posts = data?.getAllPosts || [];
+    const { loading: loadingPosts, data: postsData } = useQuery(GET_ALL_POSTS);
+    const posts = postsData?.getAllPosts || [];
 
-    const { loading, data } = useQuery(GET_GOAL_BY_USER);
-    const goal = data?.getGoalByUser || []
+    const { loading: loadingGoal, data: goalData } = useQuery(GET_GOAL_BY_USER);
+    const goal = goalData?.getGoalByUser?.[0] || {}
     console.log('goal', goal);
 
     return (
@@ -33,7 +33,7 @@ export default function Home() {
             justifyContent='space-evenly'
             w={'full'}
             h={'100vh'}
-            backgroundColor='#edede4'
+            backgroundColor='#edede1'
             pt='15px'
         >
             <Stack>
@@ -71,7 +71,7 @@ export default function Home() {
                                     <Text>Start Date: {goal.startDate}</Text>
                                     <Text>End Date:</Text>
                                     <Text>Status: {goal.status}</Text>
-                                    <Text>Current Distance: {goal.currentDistance}</Text>
+                                    <Text>Current Distance: {goal.currentDistance} miles</Text>
                                 </Flex>
                             </Flex>
                         </CardBody>
@@ -79,14 +79,14 @@ export default function Home() {
                 </VStack>
             </Stack>
 
-            {/* {loading ? (
+            {loadingPosts ? (
                 <div>Loading...</div>
             ) : (
                 <Post posts={posts} />
             )
-            } */}
+            }
 
-            <Card w='250px' h='750px' alignItems='center'>
+            {/* <Card w='250px' h='750px' alignItems='center'>
                 <CardHeader>
                     <Flex spacing='4'>
                         <Flex flex='1' gap='4' alignItems='center' flexWrap='wrap'>
@@ -94,7 +94,7 @@ export default function Home() {
                         </Flex>
                     </Flex>
                 </CardHeader>
-            </Card>
+            </Card> */}
         </Flex>
     )
 

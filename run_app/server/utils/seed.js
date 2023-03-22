@@ -24,6 +24,8 @@ connection.once('open', async () => {
         bio: 'That day, for no particular reason, I decided to go for a little run...'
     });
 
+    console.log('forestGump', forrestGump);
+
     const goalDef = await GoalDefinition.create({
         title: 'New Orleans to New York',
         start: [-90.07148, 29.95106],

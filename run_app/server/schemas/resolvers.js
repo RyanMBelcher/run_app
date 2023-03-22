@@ -7,13 +7,13 @@ const resolvers = {
         // Get logged in user information
         me: async (parent, args, context) => {
             if (context.user || args.username) {
-                const user = await User.findOne({ username: args.username || context.user.username }).populate('goals').populate('posts').populate('followers');
+                const user = await User.findOne({ username: args.username || context.user.username }).populate('goals').populate('posts').populate('followers').populate('following');
                 return user;
             }
             throw new AuthenticationError('You must be logged in!');
         },
         getSingleUser: async (parent, { username }, context) => {
-            const user = await User.findOne({ username }).populate('goals').populate('posts').populate('followers');
+            const user = await User.findOne({ username }).populate('goals').populate('posts').populate('followers').populate('following');
             return user;
         },
         getAllUsers: async (parent, args) => {
@@ -151,11 +151,26 @@ const resolvers = {
         },
 
         addFollower: async (parent, args, context) => {
-            const updatedUser = await User.findOneAndUpdate(
-                { username: args.userId || context.userId },
+            console.warn('args', args);
+            console.log('context.user_id', context.user._id);
+            const followedUser = await User.findOneAndUpdate(
+                { username: args.followUsername },
                 {
                     $addToSet: {
-                        followers: args.userId || context.user._id
+                        followers: context.user._id
+                    }
+                },
+                {
+                    new: true,
+                    runValidators: true,
+                }
+            ).populate('followers');
+            console.log('followedUser', followedUser);
+            const updatedUser = await User.findOneAndUpdate(
+                { _id: context.user._id },
+                {
+                    $addToSet: {
+                        following: followedUser._id
                     }
                 },
                 {

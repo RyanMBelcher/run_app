@@ -16,7 +16,9 @@ import {
     Text,
     Image,
     Button,
-    Link
+    Link,
+    VStack,
+    Stack
 } from '@chakra-ui/react';
 import {
     CheckIcon,
@@ -81,9 +83,9 @@ export default function Post({ posts }) {
     }
 
     return (
-        <>
+        <VStack>
             {posts.map((post) => (
-                <Card w='500px' h='550px' alignItems='center' p='20px'>
+                <Card w='500px' h='550px' alignItems='center' p='20px' flexDirection='column' key={post._id}>
                     <CardHeader>
                         <Flex flex='1' gap='4' alignItems='center' flexWrap='wrap'>
                             <Avatar />
@@ -94,8 +96,8 @@ export default function Post({ posts }) {
                                         (<Link href='/me'>{post.username}</Link>)
                                     }
 
-                                    {Auth.getProfile().data.username === post.username &&
-                                        (<Link href={'/profiles/${post.username}'}>{post.username}</Link>)
+                                    {Auth.getProfile().data.username !== post.username &&
+                                        (<Link href={`/profiles/${post.username}`}>{post.username}</Link>)
                                     }
 
                                     <p>{post.createdAt}</p>
@@ -109,7 +111,8 @@ export default function Post({ posts }) {
                     <CardBody>
                         <Text>
                             {post.description}
-                            {post.distance}
+                            <br />
+                            Distance: {post.distance}
                         </Text>
                     </CardBody>
 
@@ -122,15 +125,20 @@ export default function Post({ posts }) {
                             },
                         }}
                     >
-                        <Button flex='1' variant='ghost' leftIcon={<CheckIcon />} onClick={(event) => handleLikePost(Post._id, event)}>
-                            Like
-                        </Button>
+                        {post.likes.find(user => user._id === Auth.getProfile().data._id) ?
+                            (<Button flex='1' color='#3BBDC6' variant='ghost' leftIcon={<CheckIcon />} onClick={(event) => handleLikePost(post._id, event)}>
+                                Likes {post.likesCount}
+                            </Button>) :
+                            (<Button flex='1' variant='ghost' leftIcon={<CheckIcon />} onClick={(event) => handleLikePost(post._id, event)}>
+                                Likes {post.likesCount}
+                            </Button>)
+                        }
                         <Button flex='1' variant='ghost' leftIcon={<ChatIcon />}>
-                            Comment
+                            Comments
                         </Button >
                     </CardFooter>
                 </Card>
             ))}
-        </>
+        </VStack>
     )
 }
