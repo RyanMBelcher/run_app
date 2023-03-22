@@ -7,8 +7,10 @@ const typeDefs = gql`
         email: String
         password: String
         bio: String
+        location: String
         profileImage: String
         goals: [Goal]
+        posts: [Post]
         followers: [User]
         goalCount: Int
         postCount: Int
@@ -22,8 +24,9 @@ const typeDefs = gql`
         status: String
         currentLocation: [Float]
         currentDistance: Float
-        user: [User]
-        goal: [GoalDefinition]
+        username: String
+        goalDef: [GoalDefinition]
+        posts: [Post]
     }
 
     type GoalDefinition {
@@ -44,7 +47,7 @@ const typeDefs = gql`
         createdAt: String
         username: String
         userId: User
-        tripId: Trip
+        goalId: Goal
     }
 
     type Comment {
@@ -66,20 +69,20 @@ const typeDefs = gql`
         image: String
         username: String
         userId: String
-        tripId: String
+        goalId: String
     }
 
     type Query {
-        me(username: String!): User
+        me(username: String): User
         getSingleUser(username: String!): User
         getAllUsers: [User]
-        getGoalsByUser(username: String): [Goal]
+        getGoalByUser(username: String): [Goal]
         getSingleGoal(goalId: String): Goal
         getAllPosts: [Post]
         getPostByUser(username: String!): [Post]
         getSinglePost(postId: String!): Post
-        getCommentsOnPost(postId: String!): [User]
-        getUsersFollowers(username: String!): [User]
+        getComments(postId: String!): [User]
+        getFollowers(username: String!): [User]
     }
 
     type Mutation {
@@ -87,15 +90,15 @@ const typeDefs = gql`
         addUser(username: String!, email: String!, password: String!): Auth
         editProfile(username: String, bio: String, profileImage: String): User
         addFollower(followUsername: String, userId: String): User
-        removeFollower(blockUsername: Sting, userId: Sting): User
-        addGoal
-        deleteGoal
+        removeFollower(blockUsername: String, userId: String): User
+        addGoal(username: String): Goal
+        deleteGoal(goalId: String!, username: String): Goal
         addPost(postInfo: AddPostInfo): Post
         deletePost(postId: String!, username: String): Post
         editPost(postId: String, title: String, description: String, postImage: String): Post
         addComment(text: String!, username: String, postId: String!): Post
         deleteComment(commentId: String!, postId: String!): Post
-        toggleLikePost(postId: Sting, userId: String): Post
+        toggleLikePost(postId: String, userId: String): Post
     }
 `
 

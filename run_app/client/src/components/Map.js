@@ -909,7 +909,7 @@ export default function Map() {
     }, [loaded]);
 
     return (
-        <Box id='map' class="map-container" w="100%" h="100%"></Box>
+        <Box id='map' className="map-container" w="100%" h="100%"></Box>
     )
 }
 

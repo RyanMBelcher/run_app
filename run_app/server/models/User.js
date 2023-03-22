@@ -23,6 +23,9 @@ const userSchema = new Schema(
         bio: {
             type: String,
         },
+        location: {
+            type: String
+        },
         profileImage: {
             type: String,
         },

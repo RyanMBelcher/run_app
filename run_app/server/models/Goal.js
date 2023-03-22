@@ -23,7 +23,13 @@ const goalSchema = new Schema(
         goalDef: {
             type: Schema.Types.ObjectId,
             ref: 'GoalDefinition'
-        }
+        },
+        posts: [
+            {
+                type: Schema.Types.ObjectId,
+                ref: 'Post'
+            }
+        ]
     },
     {
         toJSON: {

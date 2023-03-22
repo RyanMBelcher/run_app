@@ -6,7 +6,7 @@ const resolvers = {
     Query: {
         // Get logged in user information
         me: async (parent, args, context) => {
-            if (context.user || args.user) {
+            if (context.user || args.username) {
                 const user = await User.findOne({ username: args.username || context.user.username }).populate('goals').populate('posts').populate('followers');
                 return user;
             }
@@ -104,7 +104,7 @@ const resolvers = {
                 },
                 {
                     new: true,
-                    runValidators: true.
+                    runValidators: true,
                 }
             ).populate('comments');
             return comment;
@@ -115,7 +115,7 @@ const resolvers = {
                 { _id: postId },
                 { $pull: { comments: { _id: commentId } } },
                 { new: true }
-            ).populate('tripId');
+            ).populate('goalId');
         },
 
         toggleLikePost: async (parent, args, context) => {
@@ -230,7 +230,7 @@ const resolvers = {
             });
 
             const updatedGoal = await Goal.findOneAndUpdate(
-                { _id: postInfo.tripId },
+                { _id: postInfo.goalId },
                 {
                     $addToSet: {
                         posts: post
@@ -261,8 +261,8 @@ const resolvers = {
         deletePost: async (parent, args, context) => {
             const post = await Post.findOneAndDelete({ _id: args.postId });
 
-            const updatedTrip = await Trip.findOneAndUpdate(
-                { _id: post.tripId._id },
+            const updatedGoal = await Goal.findOneAndUpdate(
+                { _id: post.goalId._id },
                 {
                     $pull: { posts: { _id: args.postId } },
                 },
@@ -334,7 +334,7 @@ const resolvers = {
             ).populate('goalId')
         },
 
-        likePost: async (parent, args, context) => {
+        toggleLikePost: async (parent, args, context) => {
             const post = await Post.findOne({ _id: args.postId });
             if (post.likes.includes(context.user._id)) {
                 return await Post.findOneAndUpdate(

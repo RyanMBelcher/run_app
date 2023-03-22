@@ -7,6 +7,7 @@ export const GET_ME = gql`
             username
             email
             bio
+            location
             profileImage
             goals {
                 _id
@@ -36,6 +37,7 @@ export const GET_SINGLE_USER = gql`
             username
             email
             bio
+            location
             profileImage
             goals {
                 _id
@@ -55,7 +57,7 @@ export const GET_SINGLE_USER = gql`
 `;
 
 export const GET_SINGLE_GOAL = gql`
-    query getSingleGoal($goalId: String!) {
+    query getSingleGoal($goalId: String) {
         getSingleGoal(goalId: $goalId) {
             _id
             startDate
@@ -71,9 +73,9 @@ export const GET_SINGLE_GOAL = gql`
     }
 `;
 
-export const GET_GOALS_BY_USER = gql`
-    query getGoalsByUser($username: String) {
-        getGoalsByUser(username: $username) {
+export const GET_GOAL_BY_USER = gql`
+    query getGoalByUser($username: String) {
+        getGoalByUser(username: $username) {
             _id
             startDate
             endDate
@@ -86,4 +88,39 @@ export const GET_GOALS_BY_USER = gql`
             }
         }
     }
-`
+`;
+
+export const GET_ALL_POSTS = gql`
+    query getAllPosts {
+        getAllPosts {
+            _id
+            username
+            title
+            description
+            likes {
+                _id
+                username
+            }
+            likesCount
+            goalId {
+                _id
+            }
+            comments {
+                _id
+                username
+                text
+                postId {
+                    _id
+                }
+                createdAt
+            }
+            commentCount
+            createdAt
+            userId {
+                _id
+                username
+                profileImage
+            }
+        }
+    }
+`;

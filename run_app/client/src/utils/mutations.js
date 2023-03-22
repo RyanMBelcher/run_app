@@ -31,6 +31,7 @@ export const EDIT_PROFILE = gql`
             _id
             username
             bio
+            location
             profileImage
         }
     }
@@ -64,19 +65,15 @@ export const REMOVE_FOLLOWER = gql`
     }
  `;
 
-// // export const ADD_GOAL = gql`
-
-// //  `;
-
-// export const ADD_POST = gql`
-//     mutation addPost($postInfo: AddPostInfo) {
-//         addPost(postInfo: $postInfo) {
-//             _id
-//             title
-//             description
-//         }
-//     }
-//  `;
+export const ADD_POST = gql`
+    mutation addPost($postInfo: AddPostInfo) {
+        addPost(postInfo: $postInfo) {
+            _id
+            title
+            description
+        }
+    }
+ `;
 
 export const ADD_COMMENT = gql`
     mutation addComment($text: String!, $username: String!, $postId: String) {
@@ -100,18 +97,30 @@ export const ADD_COMMENT = gql`
     }
  `;
 
-// // export const DELETE_GOAL = gql`
+// export const ADD_GOAL = gql`
+//     mutation addGoal($)
+//  `
 
-// //  `;
-
-// export const DELETE_POST = gql`
-//     mutation deletePost($postId: String!) {
-//         deletePost(postId: $postId) {
+// export const DELETE_GOAL = gql`
+//     mutation deleteGoal($goalId: String!, $username: String) {
+//         _id
+//         username
+//         location
+//         posts {
 //             _id
-//             title
 //         }
+//         postCount
 //     }
 //  `;
+
+export const DELETE_POST = gql`
+    mutation deletePost($postId: String!) {
+        deletePost(postId: $postId) {
+            _id
+            title
+        }
+    }
+ `;
 
 export const DELETE_COMMENT = gql`
     mutation deleteComment($commentId: String!, $postId: String!) {
@@ -138,16 +147,16 @@ export const DELETE_COMMENT = gql`
     }
  `;
 
-// export const EDIT_POST = gql`
-//     mutation editPost($postId: String, $title: String, $description: String) {
-//         editPost(postId: $postId, title: $title, description: $description) {
-//             _id
-//             title
-//             description
-//             username
-//         }
-//     }
-//  `;
+export const EDIT_POST = gql`
+    mutation editPost($postId: String, $title: String, $description: String) {
+        editPost(postId: $postId, title: $title, description: $description) {
+            _id
+            title
+            description
+            username
+        }
+    }
+ `;
 
 export const TOGGLE_LIKE_POST = gql`
     mutation toggleLikePost($postId: String, $userId: String) {
