@@ -20,7 +20,7 @@ import {
 import { EDIT_PROFILE } from '../../utils/mutations';
 import { GET_ME, GET_SINGLE_USER } from '../../utils/queries';
 
-export default function EditModal() {
+export default function EditProfileModal() {
 
     const { isOpen: isOpenProfile, onOpen: onOpenProfile, onClose: onCloseProfile } = useDisclosure();
 
@@ -51,10 +51,10 @@ export default function EditModal() {
         if (imageSelected) {
             const formData = new FormData();
             formData.append('file', imageSelected);
-            formData.append('upload_preset', 'di32zxbej');
+            formData.append('upload_preset', 'f3hwhsoq');
 
             response = await Axios.post('https://api.cloudinary.com/v1_1/di32zxbej/image/upload', formData);
-            console.log(response);
+            console.log('response', response);
             setFormProfile({
                 ...formProfile,
                 profileImage: response.data.url,
@@ -69,7 +69,7 @@ export default function EditModal() {
                     profileImage: response?.data.url || profile.profileImage
                 }
             });
-            console.log(data);
+            onCloseProfile();
         } catch (err) {
             console.log(err);
         }

@@ -30,7 +30,7 @@ import {
     AddIcon
 } from '@chakra-ui/icons';
 import RunModal from './modals/RunModal';
-import EditModal from './modals/EditModal';
+import EditProfileModal from './modals/EditProfileModal';
 import GoalModal from './modals/GoalModal';
 
 import { ADD_FOLLOWER } from '../utils/mutations';
@@ -60,7 +60,7 @@ export default function Profile({ hideControls }) {
                 <CardHeader>
                     <Flex spacing='4'>
                         <Flex flex='1' gap='4' alignItems='center' flexWrap='wrap'>
-                            <Avatar />{profile.profileImage}
+                            <Avatar src={profile.profileImage} />
                             <Link href='/me' _hover={{ color: '#128391' }}>
                                 <Heading size='md'>{profile.username} </Heading>
                                 {userParam &&
@@ -93,7 +93,7 @@ export default function Profile({ hideControls }) {
                     </Flex>
                 </CardBody>
                 {!userParam && !hideControls && <GoalModal />}
-                {!userParam && !hideControls && <EditModal />}
+                {!userParam && !hideControls && <EditProfileModal />}
                 {!userParam && !hideControls && <RunModal />}
             </Card>
         </>

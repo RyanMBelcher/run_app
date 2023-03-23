@@ -21,6 +21,30 @@ export default function RunModal() {
 
     const { isOpen: isOpenPost, onOpen: onOpenPost, onClose: onClosePost } = useDisclosure();
 
+    const [postTitle, setPostTitle] = useState('');
+    const [postDescription, setPostDescription] = useState('');
+    const [postDistance, setPostDistance] = useState('');
+    const [currentGoal, setCurrentGoal] = useState('');
+
+    const handleAddPost = async (e) => {
+
+        try {
+            const { data } = await handleAddPost({
+                variables: {
+                    postInfo: {
+                        title: postTitle,
+                        description: postDescription,
+                        distance: postDistance,
+                        goalId: currentGoal
+                    }
+                }
+            });
+
+        } catch (err) {
+            console.log(err);
+        }
+    }
+
     return (
         <>
             <Button onClick={onOpenPost} mb='15px' ml='20px' mr='20px' backgroundColor='#FDC500' _hover={{ bg: '#FFCE1F' }}>Add Run</Button>
@@ -35,14 +59,14 @@ export default function RunModal() {
                             <FormLabel>Title:</FormLabel>
                             <Input
                                 name='title'
-                                value=''
-                            // onChange={ }
+                                onChange={(e) => setPostTitle(e.target.value)}
                             />
                         </FormControl>
                         <FormControl>
                             <FormLabel>Description:</FormLabel>
                             <Textarea
-
+                                name='description'
+                                onChange={(e) => setPostDescription(e.target.value)}
                             />
                         </FormControl>
                         <FormControl>
@@ -50,8 +74,7 @@ export default function RunModal() {
                             <InputGroup>
                                 <Input
                                     name='distance'
-                                    value=''
-                                // onChange={}
+                                    onChange={(e) => setPostDistance(e.target.value)}
                                 />
                                 <InputRightAddon children='miles' />
                             </InputGroup>
@@ -63,7 +86,7 @@ export default function RunModal() {
                             backgroundColor='#FDC500'
                             _hover={{ bg: '#FFCE1F' }}
                             type='submit'
-                        // onClick={submitEditProfile}
+                            onClick={handleAddPost}
                         >
                             Save
                         </Button>

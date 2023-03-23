@@ -26,8 +26,8 @@ export const ADD_USER = gql`
 `;
 
 export const EDIT_PROFILE = gql`
-    mutation editProfile($bio: String, $profileImage: String, $username: String) {
-        editProfile(bio: $bio, profileImage: $profileImage, username: $username) {
+    mutation editProfile($bio: String, $location: String $profileImage: String, $username: String) {
+        editProfile(bio: $bio, location: $location, profileImage: $profileImage, username: $username) {
             _id
             username
             bio

@@ -79,6 +79,7 @@ const resolvers = {
                     $set:
                     {
                         bio: args.bio,
+                        location: args.location,
                         profileImage: args.profileImage
                     }
                 },
@@ -309,6 +310,7 @@ const resolvers = {
                     {
                         title: args.title,
                         description: args.description,
+                        location: args.location,
                         userId: context.user._id
                     }
                 },

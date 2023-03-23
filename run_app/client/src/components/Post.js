@@ -22,8 +22,10 @@ import {
 import {
     CheckIcon,
     ChatIcon,
-    DeleteIcon
+    DeleteIcon,
+    EditIcon
 } from '@chakra-ui/icons';
+import EditPostModal from './modals/EditPostModal';
 
 export default function Post({ posts }) {
     const [commentText, setCommentText] = useState('');
@@ -87,10 +89,10 @@ export default function Post({ posts }) {
                 <Card w='500px' h='550px' alignItems='center' p='20px' flexDirection='column' key={post._id}>
                     <CardHeader>
                         <Flex flex='1' gap='4' alignItems='center' flexWrap='wrap'>
-                            <Avatar />
-
                             <Box>
                                 <Heading size='sm'>
+                                    <EditPostModal post={post} />
+                                    <Avatar src={post.userId.profileImage} />
                                     {Auth.getProfile().data.username === post.username &&
                                         (<Link href='/me' _hover={{ color: '#128391' }}>{post.username}</Link>)
                                     }
@@ -98,11 +100,11 @@ export default function Post({ posts }) {
                                     {Auth.getProfile().data.username !== post.username &&
                                         (<Link href={`/profiles/${post.username}`} _hover={{ color: '#128391' }}>{post.username}</Link>)
                                     }
-
-                                    <p>{post.createdAt}</p>
+                                    <br />
+                                    {post.title}
                                 </Heading>
                                 <Text>
-                                    {post.title}
+                                    {post.createdAt}
                                 </Text>
                             </Box>
                         </Flex>
