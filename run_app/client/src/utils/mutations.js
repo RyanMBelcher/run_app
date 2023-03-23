@@ -76,7 +76,7 @@ export const ADD_POST = gql`
  `;
 
 export const ADD_COMMENT = gql`
-    mutation addComment($text: String!, $username: String!, $postId: String) {
+    mutation addComment($text: String!, $username: String, $postId: String!) {
         addComment(text: $text, username: $username, postId: $postId) {
             _id
             username
@@ -139,9 +139,8 @@ export const DELETE_COMMENT = gql`
                 text
             }
             createdAt
-            tripId {
+            goalId {
                 _id
-                location
             }
         }
     }

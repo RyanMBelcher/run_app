@@ -1,9 +1,7 @@
 import React, { useState } from 'react';
-import Map from './Map';
 import { useQuery, useMutation, useLazyQuery } from '@apollo/client';
 import { ADD_COMMENT, DELETE_COMMENT, TOGGLE_LIKE_POST } from '../utils/mutations';
 import Auth from '../utils/auth';
-
 import {
     Card,
     CardHeader,
@@ -18,13 +16,14 @@ import {
     Button,
     Link,
     VStack,
-    Stack
+    Stack,
+    Textarea
 } from '@chakra-ui/react';
 import {
     CheckIcon,
-    ChatIcon
+    ChatIcon,
+    DeleteIcon
 } from '@chakra-ui/icons';
-// import Pennsylvania from '../images/Pennsylvania.png';
 
 export default function Post({ posts }) {
     const [commentText, setCommentText] = useState('');
@@ -93,11 +92,11 @@ export default function Post({ posts }) {
                             <Box>
                                 <Heading size='sm'>
                                     {Auth.getProfile().data.username === post.username &&
-                                        (<Link href='/me'>{post.username}</Link>)
+                                        (<Link href='/me' _hover={{ color: '#128391' }}>{post.username}</Link>)
                                     }
 
                                     {Auth.getProfile().data.username !== post.username &&
-                                        (<Link href={`/profiles/${post.username}`}>{post.username}</Link>)
+                                        (<Link href={`/profiles/${post.username}`} _hover={{ color: '#128391' }}>{post.username}</Link>)
                                     }
 
                                     <p>{post.createdAt}</p>
@@ -125,6 +124,7 @@ export default function Post({ posts }) {
                             },
                         }}
                     >
+
                         {post.likes.find(user => user._id === Auth.getProfile().data._id) ?
                             (<Button flex='1' color='#3BBDC6' variant='ghost' leftIcon={<CheckIcon />} onClick={(event) => handleLikePost(post._id, event)}>
                                 Likes {post.likesCount}
@@ -134,9 +134,31 @@ export default function Post({ posts }) {
                             </Button>)
                         }
                         <Button flex='1' variant='ghost' leftIcon={<ChatIcon />}>
-                            Comments
+                            Comments {post.commentCount}
                         </Button >
                     </CardFooter>
+                    <Textarea
+                        placeholder='Comment'
+                        value={commentText}
+                        onChange={(e) => setCommentText(e.target.value)}
+                    />
+                    <Button
+                        backgroundColor='#FDC500'
+                        _hover={{ bg: '#FFCE1F' }}
+                        size='sm'
+                        mt='2'
+                        type='submit'
+                        onClick={(e) => handleSubmitComment(post._id, e)}
+                    >Submit</Button>
+                    {post.comments.map((comment) => (
+                        <Card key={comment.id}>
+                            <Text>{comment.username}</Text>
+                            <Text>{comment.createdAt}</Text>
+                            <Text>{comment.text}</Text>
+                            {Auth.getProfile().data.username === comment.username && <DeleteIcon onClick={() => { handleCommentDelete(comment._id, post._id) }} />}
+                        </Card>
+                    ))
+                    }
                 </Card>
             ))}
         </VStack>

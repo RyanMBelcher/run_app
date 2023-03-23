@@ -18,6 +18,7 @@ import {
 import Post from '../Post';
 import Auth from '../../utils/auth';
 import { GET_GOAL_BY_USER, GET_SINGLE_GOAL } from '../../utils/queries';
+import Profile from '../Profile';
 
 export default function Home() {
 
@@ -38,26 +39,7 @@ export default function Home() {
         >
             <Stack>
                 <VStack>
-                    <Card w='250px' h='250px'>
-                        <CardHeader>
-                            <Flex spacing='4'>
-                                <Flex flex='1' gap='4' alignItems='center' flexWrap='wrap'>
-                                    <Avatar />
-                                    <a href='/me'>
-                                        <Heading size='md'>{Auth.getProfile().data.username}</Heading>
-                                    </a>
-                                </Flex>
-                            </Flex>
-                        </CardHeader>
-                        <CardBody>
-                            <Flex spacing='4'>
-                                <Flex flex='1' gap='4' flexWrap='wrap' flexDirection='column' alignContent='flex-start'>
-                                    <Text>Followers: </Text>
-                                    <Text>Following: </Text>
-                                </Flex>
-                            </Flex>
-                        </CardBody>
-                    </Card>
+                    <Profile hideControls={true} />
                     <Spacer />
                     <Card w='250px' h='500px' alignItems='center'>
                         <CardHeader>

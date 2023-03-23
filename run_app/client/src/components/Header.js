@@ -11,7 +11,8 @@ import {
     Spacer,
     Heading,
     Button,
-    ButtonGroup
+    ButtonGroup,
+    Link
 } from '@chakra-ui/react'
 import Auth from '../utils/auth';
 // import Home from './pages/Home';
@@ -22,26 +23,26 @@ export default function Header() {
     return (
         <Flex minWidth='max-content' alignItems='center' gap='2' backgroundColor='#FDC500'>
             <Box p='2'>
-                <Heading size='md'><a href='/'>Run App</a></Heading>
+                <Heading size='md'><Link href='/' _hover={{ color: '#128391' }}>Run App</Link></Heading>
             </Box>
             <Spacer />
             <ButtonGroup gap='2' mr='3'>
                 {Auth.loggedIn() ? (
                     <>
-                        <a href='/home'>
+                        <Link href='/home' _hover={{ color: '#128391' }}>
                             Home
-                        </a>
-                        <a href='/me'>
+                        </Link>
+                        <Link href='/me' _hover={{ color: '#128391' }}>
                             My Profile
-                        </a>
-                        <a href='/' onClick={Auth.logout}>
+                        </Link>
+                        <Link href='/' onClick={Auth.logout} _hover={{ color: '#128391' }}>
                             Log Out
-                        </a>
+                        </Link>
                     </>
                 ) : (
                     <>
-                        <a href='/signup'>Sign Up</a>
-                        <a href='/login'>Log in</a>
+                        <Link href='/signup' _hover={{ color: '#128391' }}>Sign Up</Link>
+                        <Link href='/login' _hover={{ color: '#128391' }}>Log in</Link>
                     </>
                 )}
             </ButtonGroup>

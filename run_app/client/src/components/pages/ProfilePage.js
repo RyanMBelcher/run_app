@@ -1,9 +1,6 @@
 import React, { useState } from 'react';
 import { useParams } from 'react-router-dom';
-import Axios from 'axios';
 import { useQuery, useMutation, useLazyQuery } from '@apollo/client';
-
-
 import {
     Button,
     Modal,
@@ -92,21 +89,6 @@ export default function ProfilePage() {
             <Profile profile={profile} />
             <Post posts={posts} />
 
-            {/* <Card ml='15px' w='500px' h='500px'>
-                <CardHeader>
-                    <Flex spacing='4'>
-                        <Flex flex='1' gap='4' alignItems='center' flexWrap='wrap'>
-                            <Avatar />
-                            <Heading size='md'>{profile.username}</Heading>
-                        </Flex>
-                    </Flex>
-                </CardHeader>
-                <CardBody>
-                    <p>Recent Activity</p>
-                </CardBody>
-                {!userParam && <Button onClick={onOpen} mb='15px' ml='20px' mr='20px' backgroundColor='#FDC500' _hover={{ bg: '#FFCE1F' }}>Add Run</Button>}
-            </Card> */}
-
             <Card mr='25px' w='500px' h='500px'>
                 <CardHeader>
                     <Heading>Progress Map</Heading>
@@ -118,35 +100,7 @@ export default function ProfilePage() {
 
 
 
-            {/* add post/run modal */}
-            <Modal isOpen={isOpen} onClose={onClose}>
-                <ModalOverlay />
-                <ModalContent>
-                    <ModalHeader>Add a run</ModalHeader>
-                    <ModalCloseButton />
-                    <ModalBody>
 
-                    </ModalBody>
-                    <ModalFooter>
-                        <Button
-                            mr='3'
-                            backgroundColor='#FDC500'
-                            _hover={{ bg: '#FFCE1F' }}
-                            type='submit'
-                        // onClick={submitEditProfile}
-                        >
-                            Save
-                        </Button>
-                        <Button
-                            backgroundColor='#FDC500'
-                            _hover={{ bg: '#FFCE1F' }}
-                            onClick={onClose}
-                        >
-                            Cancel
-                        </Button>
-                    </ModalFooter>
-                </ModalContent>
-            </Modal>
 
         </Flex >
     )
