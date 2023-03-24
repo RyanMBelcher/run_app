@@ -102,8 +102,7 @@ const LoginForm = () => {
                                     <Button
                                         type='submit'
                                         backgroundColor='#FDC500'
-                                        // as={ReactLink}
-                                        // to='/'
+                                        _hover={{ bg: '#FFCE1F' }}
                                         p={5}
                                         m={5}
                                     >

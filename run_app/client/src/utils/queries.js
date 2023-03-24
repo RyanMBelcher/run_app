@@ -108,6 +108,7 @@ export const GET_ALL_POSTS = gql`
             title
             description
             distance
+            image
             likes {
                 _id
                 username

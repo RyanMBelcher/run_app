@@ -73,6 +73,7 @@ const resolvers = {
         },
 
         editProfile: async (parent, args, context) => {
+            console.warn('edit profile fired');
             const updatedUser = await User.findOneAndUpdate(
                 { username: args.username || context.user.username },
                 {
@@ -120,7 +121,9 @@ const resolvers = {
         },
 
         toggleLikePost: async (parent, args, context) => {
+            console.log('I got here');
             const like = await Post.findOneAndUpdate({ _id: args.postId });
+            console.warn(context.user._id);
 
             if (like.likes.includes(context.user._id)) {
                 return await Post.findOneAndUpdate(
@@ -240,6 +243,7 @@ const resolvers = {
             const post = await Post.create({
                 title: postInfo.title,
                 description: postInfo.description,
+                image: postInfo.image,
                 username: postInfo.username || context.user.username,
                 userId: postInfo.userId || context.user._id,
                 goalId: postInfo.goalId
@@ -303,6 +307,7 @@ const resolvers = {
         },
 
         editPost: async (parent, args, context) => {
+            console.log(args);
             const updatedPost = await Post.findOneAndUpdate(
                 { _id: args.postId },
                 {
@@ -311,6 +316,7 @@ const resolvers = {
                         title: args.title,
                         description: args.description,
                         location: args.location,
+                        image: args.postImage,
                         userId: context.user._id
                     }
                 },
@@ -319,7 +325,7 @@ const resolvers = {
                     runValidators: true,
                 }
             ).populate('userId');
-
+            console.log(updatedPost);
             return updatedPost;
         },
 
@@ -343,44 +349,14 @@ const resolvers = {
             return post
         },
 
-        deleteComment: async (parent, { commentId, postId }) => {
-            return await Post.findOneAndUpdate(
-                { _id: postId },
-                { $pull: { comments: { _id: commentId } } },
-                { new: true }
-            ).populate('goalId')
-        },
+        // deleteComment: async (parent, { commentId, postId }) => {
+        //     return await Post.findOneAndUpdate(
+        //         { _id: postId },
+        //         { $pull: { comments: { _id: commentId } } },
+        //         { new: true }
+        //     ).populate('goalId')
+        // },
 
-        toggleLikePost: async (parent, args, context) => {
-            const post = await Post.findOne({ _id: args.postId });
-            if (post.likes.includes(context.user._id)) {
-                return await Post.findOneAndUpdate(
-                    { _id: args.postId },
-                    {
-                        $pull: {
-                            likes: args.userId || context.user._id
-                        }
-                    },
-                    {
-                        new: true,
-                        runValidators: true,
-                    }
-                ).populate('likes');
-            } else {
-                return await Post.findOneAndUpdate(
-                    { _id: args.postId },
-                    {
-                        $addToSet: {
-                            likes: args.userId || context.user._id
-                        }
-                    },
-                    {
-                        new: true,
-                        runValidators: true,
-                    }
-                ).populate('likes');
-            }
-        }
     },
 };
 

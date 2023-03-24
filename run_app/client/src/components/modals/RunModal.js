@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import Axios from 'axios';
 import {
     Modal,
     ModalOverlay,
@@ -17,6 +18,8 @@ import {
     InputRightAddon
 } from '@chakra-ui/react'
 
+import { ADD_POST } from '../../utils/mutations';
+
 export default function RunModal() {
 
     const { isOpen: isOpenPost, onOpen: onOpenPost, onClose: onClosePost } = useDisclosure();
@@ -25,8 +28,20 @@ export default function RunModal() {
     const [postDescription, setPostDescription] = useState('');
     const [postDistance, setPostDistance] = useState('');
     const [currentGoal, setCurrentGoal] = useState('');
+    const [postImageSelected, setPostImageSelected] = useState('');
 
     const handleAddPost = async (e) => {
+        e.preventDefault();
+
+        let response;
+
+        if (postImageSelected) {
+            const formData = new FormData();
+            formData.append('file', postImageSelected)
+            formData.append('upload_preset', 'f3hwhsoq')
+
+            response = await Axios.post('https://api.cloudinary.com/v1_1/di32zxbej/image/upload', formData);
+        }
 
         try {
             const { data } = await handleAddPost({
@@ -35,11 +50,12 @@ export default function RunModal() {
                         title: postTitle,
                         description: postDescription,
                         distance: postDistance,
+                        image: response.data.url,
                         goalId: currentGoal
                     }
                 }
             });
-
+            onClosePost();
         } catch (err) {
             console.log(err);
         }
@@ -78,6 +94,14 @@ export default function RunModal() {
                                 />
                                 <InputRightAddon children='miles' />
                             </InputGroup>
+                            <FormControl>
+                                <FormLabel>Add an image:</FormLabel>
+                                <Input
+                                    type="file"
+                                    name="img"
+                                // onChange={(event) => { setImageSelected(event.target.files[0]) }}
+                                />
+                            </FormControl>
                         </FormControl>
                     </ModalBody>
                     <ModalFooter>

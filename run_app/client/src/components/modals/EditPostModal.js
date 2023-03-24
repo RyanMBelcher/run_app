@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import Axios from 'axios';
 import { useMutation, useQuery } from '@apollo/client';
 // import { useParams } from 'react-router-dom';
 import {
@@ -27,6 +28,9 @@ import { EDIT_POST } from '../../utils/mutations';
 export default function EditPostModal({ post }) {
     console.log('post', post)
 
+    const [imageSelected, setImageSelected] = useState('');
+    const [formProfile, setFormProfile] = useState({ bio: '', profileImage: '' });
+
     const { isOpen: isOpenEditPost, onOpen: onOpenEditPost, onClose: onCloseEditPost } = useDisclosure();
 
     // const { username: userParam } = useParams()
@@ -35,7 +39,7 @@ export default function EditPostModal({ post }) {
     // });
     // const profile = data?.me || data?.getSingleUser || {};
 
-    const [formPost, setFormPost] = useState({ title: post.title, description: post.description, distance: post.distance });
+    const [formPost, setFormPost] = useState({ title: post.title, description: post.description, distance: post.distance, postImage: post.image });
 
     const [editPost, _] = useMutation(EDIT_POST);
 
@@ -48,22 +52,31 @@ export default function EditPostModal({ post }) {
         })
     };
 
-    const submitEditPost = async (postId) => {
-        console.log({
-            postId,
-            title: formPost.title,
-            description: formPost.description,
-            distance: formPost.distance
-        })
+    const submitEditPost = async (postId, postImage, e) => {
+        e.preventDefault();
+
+        let response;
+
+        if (imageSelected) {
+            const formData = new FormData();
+            formData.append('file', imageSelected)
+            formData.append('upload_preset', 'f3hwhsoq')
+
+            response = await Axios.post('https://api.cloudinary.com/v1_1/di32zxbej/image/upload', formData);
+
+            setImageSelected('');
+        }
         try {
             const { data } = await editPost({
                 variables: {
                     postId,
                     title: formPost.title,
                     description: formPost.description,
-                    distance: formPost.distance
+                    distance: formPost.distance,
+                    postImage: response?.data.url || postImage
                 }
-            })
+            });
+            onCloseEditPost();
         } catch (err) {
             console.log(err);
         }
@@ -71,8 +84,13 @@ export default function EditPostModal({ post }) {
 
     return (
         <>
-            {/* <Button onClick={onOpenEditPost} mb='15px' ml='20px' mr='20px' backgroundColor='#FDC500' _hover={{ bg: '#FFCE1F' }}>Add Run</Button> */}
-            <EditIcon onClick={onOpenEditPost} _hover={{ color: '#3BBDC6' }} />
+            <Button
+                variant='link'
+                onClick={onOpenEditPost}
+                _hover={{ color: '#3BBDC6' }}
+            >
+                <EditIcon />
+            </Button>
             <Modal isOpen={isOpenEditPost} onClose={onCloseEditPost} >
                 <ModalOverlay />
                 <ModalContent>
@@ -106,6 +124,14 @@ export default function EditPostModal({ post }) {
                                 <InputRightAddon children='miles' />
                             </InputGroup>
                         </FormControl>
+                        <FormControl>
+                            <FormLabel>Add an image:</FormLabel>
+                            <Input
+                                type="file"
+                                name="img"
+                                onChange={(event) => { setImageSelected(event.target.files[0]) }}
+                            />
+                        </FormControl>
                     </ModalBody>
                     <ModalFooter>
                         <Button
@@ -113,7 +139,7 @@ export default function EditPostModal({ post }) {
                             backgroundColor='#FDC500'
                             _hover={{ bg: '#FFCE1F' }}
                             type='submit'
-                            onClick={() => submitEditPost(post._id)}
+                            onClick={(event) => submitEditPost(post._id, post.image, event)}
                         >
                             Update Post
                         </Button>

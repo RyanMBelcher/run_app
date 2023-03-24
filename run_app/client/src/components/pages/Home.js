@@ -31,7 +31,7 @@ export default function Home() {
 
     return (
         <Flex
-            justifyContent='space-evenly'
+            justifyContent='space-around'
             w={'full'}
             h={'100vh'}
             backgroundColor='#edede1'
@@ -41,7 +41,7 @@ export default function Home() {
                 <VStack>
                     <Profile hideControls={true} />
                     <Spacer />
-                    <Card w='250px' h='500px' alignItems='center'>
+                    <Card size='md' alignItems='center'>
                         <CardHeader>
                             <Flex spacing='4'>
                                 <Heading size='md'>Current Goal</Heading>
@@ -60,23 +60,12 @@ export default function Home() {
                     </Card>
                 </VStack>
             </Stack>
-
             {loadingPosts ? (
                 <div>Loading...</div>
             ) : (
                 <Post posts={posts} />
             )
             }
-
-            {/* <Card w='250px' h='750px' alignItems='center'>
-                <CardHeader>
-                    <Flex spacing='4'>
-                        <Flex flex='1' gap='4' alignItems='center' flexWrap='wrap'>
-                            <Heading size='md'>Recent Activity</Heading>
-                        </Flex>
-                    </Flex>
-                </CardHeader>
-            </Card> */}
         </Flex>
     )
 

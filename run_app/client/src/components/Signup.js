@@ -112,6 +112,7 @@ const SignupForm = () => {
                                     <Button
                                         type='submit'
                                         backgroundColor='#FDC500'
+                                        _hover={{ bg: '#FFCE1F' }}
                                         p={5}
                                         m={5}
                                     >

@@ -1,9 +1,12 @@
 const { Schema, model } = require('mongoose');
+const dayjs = require('dayjs');
 
 const goalSchema = new Schema(
     {
         startDate: {
-            type: Date
+            type: Date,
+            default: Date.now,
+            get: formatTimestamp
         },
         endDate: {
             type: Date
@@ -37,6 +40,10 @@ const goalSchema = new Schema(
         }
     }
 );
+
+function formatTimestamp(time) {
+    return dayjs(time).format('MMM D, YYYY [at] h:mm A');
+};
 
 goalSchema.virtual('postCount').get(function () {
     return this.posts.length;

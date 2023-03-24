@@ -28,6 +28,7 @@ import {
 import EditPostModal from './modals/EditPostModal';
 
 export default function Post({ posts }) {
+
     const [commentText, setCommentText] = useState('');
     const [addComment, { error: errorAddComment }] = useMutation(ADD_COMMENT);
     const [deleteComment, { error: errorDelComment }] = useMutation(DELETE_COMMENT);
@@ -50,7 +51,6 @@ export default function Post({ posts }) {
     };
 
     const handleCommentDelete = async (commentId, postId) => {
-
         try {
             const { data } = await deleteComment({
                 variables: {
@@ -58,9 +58,11 @@ export default function Post({ posts }) {
                     postId
                 }
             });
+
             setCommentText('');
             window.location.reload();
-        } catch (err) {
+        }
+        catch (err) {
             console.log(err);
         }
     };
@@ -74,6 +76,7 @@ export default function Post({ posts }) {
                     postId
                 }
             });
+            console.warn('data', data);
         } catch (err) {
             console.log(err);
         }
@@ -86,13 +89,13 @@ export default function Post({ posts }) {
     return (
         <VStack>
             {posts.map((post) => (
-                <Card w='500px' h='550px' alignItems='center' p='20px' flexDirection='column' key={post._id}>
+                <Card maxW='md' p='25px' flexDirection='column' key={post._id} >
                     <CardHeader>
-                        <Flex flex='1' gap='4' alignItems='center' flexWrap='wrap'>
+                        <Flex spacing='4'>
+                            <Avatar src={post._id.profileImage} />
+                            <EditPostModal post={post} />
                             <Box>
-                                <Heading size='sm'>
-                                    <EditPostModal post={post} />
-                                    <Avatar src={post.userId.profileImage} />
+                                <Heading size='sm' >
                                     {Auth.getProfile().data.username === post.username &&
                                         (<Link href='/me' _hover={{ color: '#128391' }}>{post.username}</Link>)
                                     }
@@ -100,8 +103,9 @@ export default function Post({ posts }) {
                                     {Auth.getProfile().data.username !== post.username &&
                                         (<Link href={`/profiles/${post.username}`} _hover={{ color: '#128391' }}>{post.username}</Link>)
                                     }
-                                    <br />
-                                    {post.title}
+                                    <Text>
+                                        {post.title}
+                                    </Text>
                                 </Heading>
                                 <Text>
                                     {post.createdAt}
@@ -115,6 +119,10 @@ export default function Post({ posts }) {
                             <br />
                             Distance: {post.distance}
                         </Text>
+                        <Image
+                            src={post.image}
+                            objectFit='cover'
+                        />
                     </CardBody>
 
                     <CardFooter
@@ -126,7 +134,6 @@ export default function Post({ posts }) {
                             },
                         }}
                     >
-
                         {post.likes.find(user => user._id === Auth.getProfile().data._id) ?
                             (<Button flex='1' color='#3BBDC6' variant='ghost' leftIcon={<CheckIcon />} onClick={(event) => handleLikePost(post._id, event)}>
                                 Likes {post.likesCount}
@@ -143,6 +150,7 @@ export default function Post({ posts }) {
                         placeholder='Comment'
                         value={commentText}
                         onChange={(e) => setCommentText(e.target.value)}
+                        mt='1'
                     />
                     <Button
                         backgroundColor='#FDC500'
@@ -152,17 +160,24 @@ export default function Post({ posts }) {
                         type='submit'
                         onClick={(e) => handleSubmitComment(post._id, e)}
                     >Submit</Button>
-                    {post.comments.map((comment) => (
-                        <Card key={comment.id}>
-                            <Text>{comment.username}</Text>
-                            <Text>{comment.createdAt}</Text>
-                            <Text>{comment.text}</Text>
-                            {Auth.getProfile().data.username === comment.username && <DeleteIcon onClick={() => { handleCommentDelete(comment._id, post._id) }} />}
-                        </Card>
-                    ))
+                    {
+                        post.comments.map((comment) => (
+                            <Card key={comment.id} mt='5'>
+                                <Text>{comment.username}</Text>
+                                <Text>{comment.createdAt}</Text>
+                                <Text>{comment.text}</Text>
+                                <Button
+                                    variant='link'
+                                    _hover={{ color: '#3BBDC6' }}
+                                >
+                                    {Auth.getProfile().data.username === comment.username && <DeleteIcon onClick={() => { handleCommentDelete(comment._id, post._id) }} />}
+                                </Button>
+                            </Card>
+                        ))
                     }
                 </Card>
-            ))}
-        </VStack>
+            ))
+            }
+        </VStack >
     )
 }

@@ -56,7 +56,7 @@ export default function Profile({ hideControls }) {
 
     return (
         <>
-            <Card w='250px' h='500px' ml='25px'>
+            <Card size='md' ml='25px'>
                 <CardHeader>
                     <Flex spacing='4'>
                         <Flex flex='1' gap='4' alignItems='center' flexWrap='wrap'>
