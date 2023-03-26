@@ -1,7 +1,7 @@
 const { Schema, model } = require('mongoose');
 const Goal = require('./Goal');
 
-const goalDefSchema = new Schema(
+const goalDefinitionSchema = new Schema(
     {
         title: {
             type: String,
@@ -23,6 +23,6 @@ const goalDefSchema = new Schema(
 );
 
 
-const GoalDefinition = model('GoalDefinition', goalDefSchema);
+const GoalDefinition = model('GoalDefinition', goalDefinitionSchema);
 
 module.exports = GoalDefinition;

@@ -27,12 +27,13 @@ const typeDefs = gql`
         currentLocation: [Float]
         currentDistance: Float
         username: String
-        goalDef: [GoalDefinition]
+        goalDefinition: GoalDefinition
         posts: [Post]
     }
 
     type GoalDefinition {
         _id: ID!
+        title: String
         start: [Float]
         end: [Float]
         coordinates: [[Float]]
@@ -83,6 +84,7 @@ const typeDefs = gql`
         getAllUsers: [User]
         getGoalByUser(username: String): [Goal]
         getSingleGoal(goalId: String): Goal
+        getAllGoalDefinitions: [GoalDefinition]
         getAllPosts: [Post]
         getPostByUser(username: String!): [Post]
         getSinglePost(postId: String!): Post
@@ -96,7 +98,7 @@ const typeDefs = gql`
         editProfile(username: String, bio: String, location: String, profileImage: String): User
         addFollower(followUsername: String, userId: String): User
         removeFollower(blockUsername: String, userId: String): User
-        addGoal(username: String): Goal
+        addGoal(goalDefinitionId: String): Goal
         deleteGoal(goalId: String!, username: String): Goal
         addPost(postInfo: AddPostInfo): Post
         deletePost(postId: String!, username: String): Post

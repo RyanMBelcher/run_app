@@ -76,9 +76,22 @@ export const GET_SINGLE_GOAL = gql`
             currentLocation
             currentDistance
             username
-            goalDef {
+            goalDefinition {
                 _id
             }
+        }
+    }
+`;
+
+export const GET_ALL_GOAL_DEFINITIONS = gql`
+    query getAllGoalDefinitions {
+        getAllGoalDefinitions {
+            _id
+            title
+            start
+            end
+            coordinates
+            distance
         }
     }
 `;
@@ -93,8 +106,13 @@ export const GET_GOAL_BY_USER = gql`
             currentLocation
             currentDistance
             username
-            goalDef {
+            goalDefinition {
                 _id
+                title
+                distance
+                start
+                end
+                coordinates
             }
         }
     }

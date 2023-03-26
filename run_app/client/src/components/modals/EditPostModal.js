@@ -25,7 +25,7 @@ import {
 import { EDIT_POST } from '../../utils/mutations';
 // import { GET_ME, GET_SINGLE_USER } from '../../utils/queries';
 
-export default function EditPostModal({ post }) {
+export default function EditPostModal({ post, showButton }) {
     console.log('post', post)
 
     const [imageSelected, setImageSelected] = useState('');
@@ -84,13 +84,13 @@ export default function EditPostModal({ post }) {
 
     return (
         <>
-            <Button
+            {showButton && <Button
                 variant='link'
                 onClick={onOpenEditPost}
                 _hover={{ color: '#3BBDC6' }}
             >
                 <EditIcon />
-            </Button>
+            </Button>}
             <Modal isOpen={isOpenEditPost} onClose={onCloseEditPost} >
                 <ModalOverlay />
                 <ModalContent>

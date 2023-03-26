@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { useQuery, useMutation, useLazyQuery } from '@apollo/client';
-import { GET_ALL_POSTS } from '../../utils/queries';
+import { GET_ALL_POSTS, GET_GOAL_BY_USER, GET_SINGLE_GOAL } from '../../utils/queries';
 import {
     Card,
     CardHeader,
@@ -15,18 +15,18 @@ import {
     VStack,
     Spacer
 } from '@chakra-ui/react';
-import Post from '../Post';
+import Posts from '../Posts';
 import Auth from '../../utils/auth';
-import { GET_GOAL_BY_USER, GET_SINGLE_GOAL } from '../../utils/queries';
 import Profile from '../Profile';
+import Map from '../Map';
 
 export default function Home() {
-
     const { loading: loadingPosts, data: postsData } = useQuery(GET_ALL_POSTS);
     const posts = postsData?.getAllPosts || [];
 
     const { loading: loadingGoal, data: goalData } = useQuery(GET_GOAL_BY_USER);
-    const goal = goalData?.getGoalByUser?.[0] || {}
+    const goal = goalData?.getGoalByUser?.[0] || {};
+    console.log('goalData', goalData);
     console.log('goal', goal);
 
     return (
@@ -50,12 +50,18 @@ export default function Home() {
                         <CardBody>
                             <Flex spacing='4'>
                                 <Flex flex='1' gap='4' flexWrap='wrap' flexDirection='column' alignItems='flex-start'>
+                                    <Text>Title: {goal.goalDefinition?.title}</Text>
                                     <Text>Start Date: {goal.startDate}</Text>
                                     <Text>End Date:</Text>
                                     <Text>Status: {goal.status}</Text>
                                     <Text>Current Distance: {goal.currentDistance} miles</Text>
+                                    <Text>Total Distance: {goal.goalDefinition?.distance} miles</Text>
+                                    <Box p="2" h="300px" w="100%">
+                                        {goal.goalDefinition && <Map goal={goal} />}
+                                    </Box>
                                 </Flex>
                             </Flex>
+
                         </CardBody>
                     </Card>
                 </VStack>
@@ -63,7 +69,7 @@ export default function Home() {
             {loadingPosts ? (
                 <div>Loading...</div>
             ) : (
-                <Post posts={posts} />
+                <Posts posts={posts} />
             )
             }
         </Flex>

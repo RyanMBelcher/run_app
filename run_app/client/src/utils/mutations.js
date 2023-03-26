@@ -97,9 +97,14 @@ export const ADD_COMMENT = gql`
     }
  `;
 
-// export const ADD_GOAL = gql`
-//     mutation addGoal($)
-//  `
+export const ADD_GOAL = gql`
+    mutation addGoal($goalDefinitionId: String) {
+        addGoal(goalDefinitionId: $goalDefinitionId) {
+            _id
+            username
+        }
+    }
+ `
 
 // export const DELETE_GOAL = gql`
 //     mutation deleteGoal($goalId: String!, $username: String) {

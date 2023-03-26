@@ -1,5 +1,5 @@
 const { AuthenticationError } = require('apollo-server-express');
-const { User, Goal, Post } = require('../models');
+const { User, Goal, Post, GoalDefinition } = require('../models');
 const { signToken } = require('../utils/auth');
 
 const resolvers = {
@@ -19,8 +19,15 @@ const resolvers = {
         getAllUsers: async (parent, args) => {
             return await User.find({}).populate('goals').populate('posts').populate('followers');
         },
+        getAllGoalDefinitions: async (parent, args, context) => {
+            const goalDefinitions = await GoalDefinition.find({});
+            console.log('goalDefinitions', goalDefinitions);
+            return goalDefinitions;
+        },
         getGoalByUser: async (parent, args, context) => {
-            const goals = await Goal.find({ username: context.user.username }).populate('posts');
+            console.log('context.user.username', context.user.username)
+            const goals = await Goal.find({ username: context.user.username }).populate('goalDefinition').populate('posts');
+            console.warn('goals', goals);
             return goals;
         },
         getSingleGoal: async (parent, args, context) => {
@@ -121,9 +128,7 @@ const resolvers = {
         },
 
         toggleLikePost: async (parent, args, context) => {
-            console.log('I got here');
-            const like = await Post.findOneAndUpdate({ _id: args.postId });
-            console.warn(context.user._id);
+            const like = await Post.findOne({ _id: args.postId });
 
             if (like.likes.includes(context.user._id)) {
                 return await Post.findOneAndUpdate(
@@ -202,18 +207,23 @@ const resolvers = {
         },
 
         addGoal: async (parent, args, context) => {
-
-            const goal = await Goal.create({
-                startDate: args.startDate,
-                endDate: args.endDate,
-                status: args.status,
-                currentLocation: args.currentLocation,
-                currentDistance: args.currentDistance,
-                username: args.username
+            const goalDefinition = await GoalDefinition.findOne({
+                _id: args.goalDefinitionId,
             });
+            console.log('goalDefinition', goalDefinition);
+            const goal = await Goal.create({
+                startDate: new Date(),
+                endDate: null,
+                status: "in progress",
+                currentLocation: goalDefinition.start,
+                currentDistance: 0,
+                username: context.user.username,
+                goalDefinition: goalDefinition._id
+            });
+            console.log('goal', goal);
 
             const updatedUser = await User.findOneAndUpdate(
-                { username: args.username || context.user.username },
+                { _id: context.user._id },
                 {
                     $addToSet: {
                         goals: goal
@@ -224,7 +234,7 @@ const resolvers = {
                     runValidators: true,
                 }
             ).populate('goals');
-            return goal;
+            return updatedUser;
         },
 
         deleteGoal: async (parent, args, context) => {

@@ -74,7 +74,7 @@ export default function Profile({ hideControls }) {
                                             onClick={followUser}
                                         >
                                             Follow
-                                        </Button >
+                                        </Button>
                                     )
                                 }
                             </Link>

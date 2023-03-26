@@ -29,7 +29,7 @@ import {
 
 import Auth from '../../utils/auth';
 import Profile from '../Profile';
-import Post from '../Post';
+import Posts from '../Posts';
 import { GET_ME, GET_SINGLE_USER, GET_GOALS_BY_USER, GET_SINGLE_GOAL, GET_ALL_POSTS } from '../../utils/queries';
 import { ADD_GOAL, ADD_POST, DELETE_GOAL, DELETE_POST, EDIT_POST, EDIT_PROFILE, ADD_FOLLOWER, REMOVE_FOLLOWER } from '../../utils/mutations';
 
@@ -87,14 +87,14 @@ export default function ProfilePage() {
         >
 
             <Profile profile={profile} />
-            <Post posts={posts} />
+            <Posts posts={posts} />
 
-            <Card mr='25px' w='500px' h='500px'>
+            {/* <Card mr='25px' w='500px' h='500px'>
                 <CardHeader>
                     <Heading>Progress Map</Heading>
                 </CardHeader>
                 <Map />
-            </Card>
+            </Card> */}
 
 
 

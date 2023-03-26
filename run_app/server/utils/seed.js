@@ -882,7 +882,7 @@ connection.once('open', async () => {
         currentLocation: [-89.15701, 31.67613],
         currentDistance: 250,
         username: 'runner_boi',
-        goalDefId: goalDef._id
+        goalDefinition: goalDef._id
 
     });
 
@@ -893,7 +893,7 @@ connection.once('open', async () => {
         currentLocation: [-77.94095, 38.90257],
         currentDistance: 1230,
         username: 'runforrestrun',
-        goalDefId: goalDef._id
+        goalDefinition: goalDef._id
     });
 
     const runnerBoiGoal = await Goal.find({ username: 'runner_boi' });
@@ -939,7 +939,7 @@ connection.once('open', async () => {
         },
         { new: true }
     );
-    await User.findOneAndUpdate(
+    const updatedFOrest = await User.findOneAndUpdate(
         { username: 'runforrestrun' },
         {
             $push: {
@@ -949,6 +949,7 @@ connection.once('open', async () => {
         },
         { new: true }
     );
+    console.log('updatedFOrest', updatedFOrest);
 
     process.exit(0);
 });
