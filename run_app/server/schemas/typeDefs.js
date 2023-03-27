@@ -70,16 +70,15 @@ const typeDefs = gql`
     }
 
     input AddPostInfo {
-        title: String
-        description: String
+        title: String!
+        description: String!
+        distance: Int!
         image: String
-        username: String
-        userId: String
         goalId: String
     }
 
     type Query {
-        me(username: String): User
+        me: User
         getSingleUser(username: String!): User
         getAllUsers: [User]
         getGoalByUser(username: String): [Goal]

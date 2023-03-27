@@ -5,8 +5,6 @@ import { Box } from '@chakra-ui/react'
 export default function Map({ goal }) {
     const [loaded, setLoaded] = useState(false);
 
-    console.log('goal in map', goal)
-
     useEffect(() => {
         setLoaded(true);
     }, [])
@@ -64,7 +62,7 @@ export default function Map({ goal }) {
                         'line-cap': 'round'
                     },
                     'paint': {
-                        'line-color': '#888',
+                        'line-color': '#3BBDC6',
                         'line-width': 8
                     }
                 });

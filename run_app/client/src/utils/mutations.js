@@ -71,6 +71,11 @@ export const ADD_POST = gql`
             _id
             title
             description
+            distance
+            image
+            goalId {
+                _id
+            }
         }
     }
  `;

@@ -25,9 +25,9 @@ export default function EditProfileModal() {
     const { isOpen: isOpenProfile, onOpen: onOpenProfile, onClose: onCloseProfile } = useDisclosure();
 
     const { username: userParam } = useParams()
-    const { loading, data } = useQuery(!userParam ? GET_ME : GET_SINGLE_USER, {
+    const { loading, data } = useQuery(!userParam ? GET_ME : GET_SINGLE_USER, userParam ? {
         variables: { username: userParam },
-    });
+    } : undefined);
     const profile = data?.me || data?.getSingleUser || {};
 
     const [imageSelected, setImageSelected] = useState('');

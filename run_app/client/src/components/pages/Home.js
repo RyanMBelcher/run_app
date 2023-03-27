@@ -26,15 +26,13 @@ export default function Home() {
 
     const { loading: loadingGoal, data: goalData } = useQuery(GET_GOAL_BY_USER);
     const goal = goalData?.getGoalByUser?.[0] || {};
-    console.log('goalData', goalData);
-    console.log('goal', goal);
 
     return (
         <Flex
-            justifyContent='space-around'
+            justifyContent='space-between'
             w={'full'}
-            h={'100vh'}
-            backgroundColor='#edede1'
+            h={'full'}
+            backgroundColor='#dee2e6'
             pt='15px'
         >
             <Stack>

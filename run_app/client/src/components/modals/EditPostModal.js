@@ -26,8 +26,6 @@ import { EDIT_POST } from '../../utils/mutations';
 // import { GET_ME, GET_SINGLE_USER } from '../../utils/queries';
 
 export default function EditPostModal({ post, showButton }) {
-    console.log('post', post)
-
     const [imageSelected, setImageSelected] = useState('');
     const [formProfile, setFormProfile] = useState({ bio: '', profileImage: '' });
 

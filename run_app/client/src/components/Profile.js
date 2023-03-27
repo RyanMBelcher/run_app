@@ -39,11 +39,12 @@ import { GET_ME, GET_SINGLE_USER } from '../utils/queries';
 export default function Profile({ hideControls }) {
 
     const { username: userParam } = useParams()
-    const { loading, data } = useQuery(!userParam ? GET_ME : GET_SINGLE_USER, {
+    console.log('userparam', userParam);
+    const { loading, data } = useQuery(!userParam ? GET_ME : GET_SINGLE_USER, userParam ? {
         variables: { username: userParam },
-    });
+    } : undefined);
     const profile = data?.me || data?.getSingleUser || {};
-
+    console.log('profile', profile);
     const [addFollower, { error: errorAddFollower }] = useMutation(ADD_FOLLOWER);
 
     const followUser = async () => {
@@ -56,7 +57,7 @@ export default function Profile({ hideControls }) {
 
     return (
         <>
-            <Card size='md' ml='25px'>
+            <Card maxW='md' maxH='md' ml='25px'>
                 <CardHeader>
                     <Flex spacing='4'>
                         <Flex flex='1' gap='4' alignItems='center' flexWrap='wrap'>

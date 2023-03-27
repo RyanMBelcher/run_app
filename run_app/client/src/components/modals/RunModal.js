@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useMutation, useQuery } from '@apollo/client';
 import Axios from 'axios';
 import {
     Modal,
@@ -15,20 +16,26 @@ import {
     Button,
     useDisclosure,
     InputGroup,
-    InputRightAddon
+    InputRightAddon,
+    Spinner
 } from '@chakra-ui/react'
 
 import { ADD_POST } from '../../utils/mutations';
+import { GET_GOAL_BY_USER } from '../../utils/queries';
 
 export default function RunModal() {
 
     const { isOpen: isOpenPost, onOpen: onOpenPost, onClose: onClosePost } = useDisclosure();
 
+    const { loading: loadingGoal, data: goalData } = useQuery(GET_GOAL_BY_USER);
+    const goal = goalData?.getGoalByUser?.[0] || {};
+
     const [postTitle, setPostTitle] = useState('');
     const [postDescription, setPostDescription] = useState('');
     const [postDistance, setPostDistance] = useState('');
-    const [currentGoal, setCurrentGoal] = useState('');
     const [postImageSelected, setPostImageSelected] = useState('');
+
+    const [addPost, { error: errorAddPost }] = useMutation(ADD_POST);
 
     const handleAddPost = async (e) => {
         e.preventDefault();
@@ -44,24 +51,25 @@ export default function RunModal() {
         }
 
         try {
-            const { data } = await handleAddPost({
+            const { data } = await addPost({
                 variables: {
                     postInfo: {
                         title: postTitle,
                         description: postDescription,
-                        distance: postDistance,
-                        image: response.data.url,
-                        goalId: currentGoal
+                        distance: parseInt(postDistance),
+                        image: response?.data?.url,
+                        goalId: goal._id
                     }
                 }
             });
+
             onClosePost();
         } catch (err) {
             console.log(err);
         }
     }
 
-    return (
+    return loadingGoal ? <Spinner /> : (
         <>
             <Button onClick={onOpenPost} mb='15px' ml='20px' mr='20px' backgroundColor='#FDC500' _hover={{ bg: '#FFCE1F' }}>Add Run</Button>
 
@@ -72,7 +80,7 @@ export default function RunModal() {
                     <ModalCloseButton />
                     <ModalBody>
                         <FormControl>
-                            <FormLabel>Title:</FormLabel>
+                            <FormLabel>Title: </FormLabel>
                             <Input
                                 name='title'
                                 onChange={(e) => setPostTitle(e.target.value)}
@@ -99,7 +107,7 @@ export default function RunModal() {
                                 <Input
                                     type="file"
                                     name="img"
-                                // onChange={(event) => { setImageSelected(event.target.files[0]) }}
+                                    onChange={(e) => { setPostImageSelected(e.target.files[0]) }}
                                 />
                             </FormControl>
                         </FormControl>

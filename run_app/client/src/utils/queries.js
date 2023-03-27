@@ -1,8 +1,8 @@
 import { gql } from '@apollo/client';
 
 export const GET_ME = gql`
-    query me($username: String) {
-        me(username: $username) {
+    query me {
+        me {
             _id
             username
             email
@@ -11,9 +11,6 @@ export const GET_ME = gql`
             profileImage
             goals {
                 _id
-                posts {
-                    _id
-                }
             }
             posts {
                 _id
@@ -121,6 +118,43 @@ export const GET_GOAL_BY_USER = gql`
 export const GET_ALL_POSTS = gql`
     query getAllPosts {
         getAllPosts {
+            _id
+            username
+            title
+            description
+            distance
+            image
+            likes {
+                _id
+                username
+            }
+            likesCount
+            goalId {
+                _id
+            }
+            comments {
+                _id
+                username
+                text
+                postId {
+                    _id
+                }
+                createdAt
+            }
+            commentCount
+            createdAt
+            userId {
+                _id
+                username
+                profileImage
+            }
+        }
+    }
+`;
+
+export const GET_POST_BY_USER = gql`
+    query getPostByUser($username: String!) {
+        getPostByUser(username: $username) {
             _id
             username
             title

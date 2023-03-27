@@ -1,13 +1,14 @@
 const { AuthenticationError } = require('apollo-server-express');
 const { User, Goal, Post, GoalDefinition } = require('../models');
 const { signToken } = require('../utils/auth');
+const turf = require('@turf/turf')
 
 const resolvers = {
     Query: {
         // Get logged in user information
         me: async (parent, args, context) => {
-            if (context.user || args.username) {
-                const user = await User.findOne({ username: args.username || context.user.username }).populate('goals').populate('posts').populate('followers').populate('following');
+            if (context.user) {
+                const user = await User.findOne({ username: context.user.username }).populate('goals').populate('posts').populate('followers').populate('following');
                 return user;
             }
             throw new AuthenticationError('You must be logged in!');
@@ -21,13 +22,13 @@ const resolvers = {
         },
         getAllGoalDefinitions: async (parent, args, context) => {
             const goalDefinitions = await GoalDefinition.find({});
-            console.log('goalDefinitions', goalDefinitions);
+
             return goalDefinitions;
         },
         getGoalByUser: async (parent, args, context) => {
-            console.log('context.user.username', context.user.username)
+
             const goals = await Goal.find({ username: context.user.username }).populate('goalDefinition').populate('posts');
-            console.warn('goals', goals);
+
             return goals;
         },
         getSingleGoal: async (parent, args, context) => {
@@ -41,7 +42,9 @@ const resolvers = {
         },
         getPostByUser: async (parent, { username }) => {
             const posts = await Post.find({ username }).populate('comments').populate('goalId');
-            return posts;
+            const sortedPosts = posts.sort((a, b) => a.createdAt - b.createdAt);
+            console.log('posts', posts)
+            return sortedPosts;
         },
         getSinglePost: async (parent, { postId }) => {
             const post = await Post.findOne({ _id: postId }).populate('comments').populate('goalId');
@@ -80,7 +83,7 @@ const resolvers = {
         },
 
         editProfile: async (parent, args, context) => {
-            console.warn('edit profile fired');
+
             const updatedUser = await User.findOneAndUpdate(
                 { username: args.username || context.user.username },
                 {
@@ -160,8 +163,7 @@ const resolvers = {
         },
 
         addFollower: async (parent, args, context) => {
-            console.warn('args', args);
-            console.log('context.user_id', context.user._id);
+
             const followedUser = await User.findOneAndUpdate(
                 { username: args.followUsername },
                 {
@@ -174,7 +176,7 @@ const resolvers = {
                     runValidators: true,
                 }
             ).populate('followers');
-            console.log('followedUser', followedUser);
+
             const updatedUser = await User.findOneAndUpdate(
                 { _id: context.user._id },
                 {
@@ -210,7 +212,7 @@ const resolvers = {
             const goalDefinition = await GoalDefinition.findOne({
                 _id: args.goalDefinitionId,
             });
-            console.log('goalDefinition', goalDefinition);
+
             const goal = await Goal.create({
                 startDate: new Date(),
                 endDate: null,
@@ -220,7 +222,7 @@ const resolvers = {
                 username: context.user.username,
                 goalDefinition: goalDefinition._id
             });
-            console.log('goal', goal);
+
 
             const updatedUser = await User.findOneAndUpdate(
                 { _id: context.user._id },
@@ -250,12 +252,24 @@ const resolvers = {
         },
 
         addPost: async (parent, { postInfo }, context) => {
+            const currentGoal = await Goal.findOne({ _id: postInfo.goalId }).populate('goalDefinition');
+            console.log(currentGoal);
+            console.log('current location', currentGoal.currentLocation);
+            const path = turf.lineString(currentGoal.goalDefinition.coordinates);
+            const newCurrentDistance = currentGoal.currentDistance + postInfo.distance;
+            const percentageDone = newCurrentDistance / currentGoal.goalDefinition.distance;
+            console.log('percentageDone', percentageDone);
+            const alongPath = turf.along(path, newCurrentDistance, { options: 'miles' });
+            console.warn('alongPath', alongPath);
+            const newCurrentLocation = alongPath.geometry.coordinates;
+            console.log('new current location', newCurrentLocation);
             const post = await Post.create({
                 title: postInfo.title,
                 description: postInfo.description,
+                distance: postInfo.distance,
                 image: postInfo.image,
-                username: postInfo.username || context.user.username,
-                userId: postInfo.userId || context.user._id,
+                username: context.user.username,
+                userId: context.user._id,
                 goalId: postInfo.goalId
             });
 
@@ -264,6 +278,11 @@ const resolvers = {
                 {
                     $addToSet: {
                         posts: post
+                    },
+                    $set:
+                    {
+                        currentDistance: newCurrentDistance,
+                        currentLocation: newCurrentLocation
                     }
                 },
                 {
@@ -317,7 +336,6 @@ const resolvers = {
         },
 
         editPost: async (parent, args, context) => {
-            console.log(args);
             const updatedPost = await Post.findOneAndUpdate(
                 { _id: args.postId },
                 {
@@ -335,7 +353,7 @@ const resolvers = {
                     runValidators: true,
                 }
             ).populate('userId');
-            console.log(updatedPost);
+
             return updatedPost;
         },
 
@@ -358,15 +376,6 @@ const resolvers = {
             ).populate('comments');
             return post
         },
-
-        // deleteComment: async (parent, { commentId, postId }) => {
-        //     return await Post.findOneAndUpdate(
-        //         { _id: postId },
-        //         { $pull: { comments: { _id: commentId } } },
-        //         { new: true }
-        //     ).populate('goalId')
-        // },
-
     },
 };
 

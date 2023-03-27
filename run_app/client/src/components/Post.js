@@ -15,7 +15,8 @@ import {
     Image,
     Button,
     Link,
-    Textarea
+    Textarea,
+    Divider
 } from '@chakra-ui/react';
 import {
     CheckIcon,
@@ -79,7 +80,7 @@ export default function Post({ post }) {
     };
 
     return (
-        <Card maxW='md' p='25px' flexDirection='column' key={post._id} >
+        <Card maxW='sm' p='25px' flexDirection='column' key={post._id} >
             <CardHeader>
                 <Flex spacing='4'>
                     <Avatar src={post._id.profileImage} />
@@ -107,7 +108,7 @@ export default function Post({ post }) {
                 <Text>
                     {post.description}
                     <br />
-                    Distance: {post.distance}
+                    Distance: {post.distance} miles
                 </Text>
                 <Image
                     src={post.image}
@@ -147,12 +148,14 @@ export default function Post({ post }) {
                 _hover={{ bg: '#FFCE1F' }}
                 size='sm'
                 mt='2'
+                mb='2'
                 type='submit'
                 onClick={(e) => handleSubmitComment(post._id, e)}
             >Submit</Button>
+
             {
                 post.comments.map((comment) => (
-                    <Card key={comment._id} mt='5'>
+                    <Card key={comment._id} mt='5' p='2'>
                         <Text>{comment.username}</Text>
                         <Text>{comment.createdAt}</Text>
                         <Text>{comment.text}</Text>

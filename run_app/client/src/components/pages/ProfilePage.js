@@ -30,17 +30,24 @@ import {
 import Auth from '../../utils/auth';
 import Profile from '../Profile';
 import Posts from '../Posts';
-import { GET_ME, GET_SINGLE_USER, GET_GOALS_BY_USER, GET_SINGLE_GOAL, GET_ALL_POSTS } from '../../utils/queries';
+import { GET_ME, GET_SINGLE_USER, GET_GOALS_BY_USER, GET_SINGLE_GOAL, GET_ALL_POSTS, GET_POST_BY_USER } from '../../utils/queries';
 import { ADD_GOAL, ADD_POST, DELETE_GOAL, DELETE_POST, EDIT_POST, EDIT_PROFILE, ADD_FOLLOWER, REMOVE_FOLLOWER } from '../../utils/mutations';
 
 import Map from '../Map';
 
 export default function ProfilePage() {
-
-
-    const { loading: loadingPosts, data: postsData } = useQuery(GET_ALL_POSTS);
-    const posts = postsData?.getAllPosts || [];
-    console.log('posts', postsData);
+    const { username: userParam } = useParams();
+    const authUsername = Auth.getProfile()?.data.username;
+    const username = userParam || authUsername;
+    const { loading: loadingPosts, data: postsData } = useQuery(GET_POST_BY_USER, {
+        variables: { username }
+    });
+    const { loading, data } = useQuery(GET_SINGLE_USER, {
+        variables: { username },
+    });
+    console.log('getMeData', data);
+    console.log('getPostsData', postsData);
+    const posts = postsData?.getPostByUser || [];
 
     const [seeGoals, setSeeGoals] = useState(true);
 
@@ -48,18 +55,11 @@ export default function ProfilePage() {
 
     const { isOpen, onOpen, onClose } = useDisclosure();
 
-    const { username: userParam } = useParams()
-    console.log(userParam);
-
-    const { loading, data } = useQuery(!userParam ? GET_ME : GET_SINGLE_USER, {
-        variables: { username: userParam },
-    });
-
     const profile = data?.me || data?.getSingleUser || {};
 
     console.log('profile', profile);
     console.log('data', data);
-
+    console.log(' Auth.getProfile()?.data.username', Auth.getProfile())
 
 
     const [showProfileModal, setShowProfileModal] = useState('');
@@ -81,8 +81,8 @@ export default function ProfilePage() {
         <Flex
             justifyContent='space-between'
             w={'full'}
-            h={'100vh'}
-            backgroundColor='#edede4'
+            h={'full'}
+            backgroundColor='#dee2e6'
             pt='15px'
         >
 
