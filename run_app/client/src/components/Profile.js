@@ -10,6 +10,7 @@ import {
     Button,
     CardBody,
     Text,
+    Box,
     useDisclosure,
     Modal,
     ModalOverlay,
@@ -56,8 +57,8 @@ export default function Profile({ hideControls }) {
     };
 
     return (
-        <>
-            <Card maxW='md' maxH='md' ml='25px'>
+        <Box maxW='100%'>
+            <Card maxW='100%' maxH='md' ml='25px'>
                 <CardHeader>
                     <Flex spacing='4'>
                         <Flex flex='1' gap='4' alignItems='center' flexWrap='wrap'>
@@ -97,6 +98,6 @@ export default function Profile({ hideControls }) {
                 {!userParam && !hideControls && <EditProfileModal />}
                 {!userParam && !hideControls && <RunModal />}
             </Card>
-        </>
+        </Box>
     )
 }

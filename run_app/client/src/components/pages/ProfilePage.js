@@ -89,12 +89,12 @@ export default function ProfilePage() {
             <Profile profile={profile} />
             <Posts posts={posts} />
 
-            {/* <Card mr='25px' w='500px' h='500px'>
+            <Card mr='25px' w='500px' h='500px'>
                 <CardHeader>
                     <Heading>Progress Map</Heading>
                 </CardHeader>
                 <Map />
-            </Card> */}
+            </Card>
 
 
 
