@@ -5,6 +5,7 @@ import Signup from '../components/Signup';
 import Home from './pages/Home';
 import ProfilePage from './pages/ProfilePage';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import { Container } from '@chakra-ui/react'
 
 function Content() {
     const router = createBrowserRouter([
@@ -35,9 +36,9 @@ function Content() {
     ]);
 
     return (
-        <div>
+        <Container maxW='1160px'>
             <RouterProvider router={router} />
-        </div>
+        </Container>
     );
 }
 

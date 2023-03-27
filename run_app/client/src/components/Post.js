@@ -80,7 +80,7 @@ export default function Post({ post }) {
     };
 
     return (
-        <Box w='30%'>
+        <Box w='100%'>
             <Card maxW='100%' p='25px' flexDirection='column' key={post._id} >
                 <CardHeader>
                     <Flex spacing='4'>

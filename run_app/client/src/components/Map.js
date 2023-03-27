@@ -4,6 +4,7 @@ import { Box } from '@chakra-ui/react'
 
 export default function Map({ goal }) {
     const [loaded, setLoaded] = useState(false);
+    console.log('goalDefinition', goal.goalDefinition)
 
     useEffect(() => {
         setLoaded(true);

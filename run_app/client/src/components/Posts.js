@@ -8,10 +8,11 @@ export default function Posts({ posts }) {
     }
 
     return (
-        <VStack>
+        <>
             {posts.map((post) => (
                 <Post post={post} key={post._id} />
             ))}
-        </VStack >
+        </>
+
     )
 }

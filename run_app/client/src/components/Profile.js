@@ -58,9 +58,9 @@ export default function Profile({ hideControls }) {
 
     return (
         <Box maxW='100%'>
-            <Card maxW='100%' maxH='md' ml='25px'>
+            <Card maxW='100%' maxH='md'>
                 <CardHeader>
-                    <Flex spacing='4'>
+                    <Flex>
                         <Flex flex='1' gap='4' alignItems='center' flexWrap='wrap'>
                             <Avatar src={profile.profileImage} />
                             <Link href='/me' _hover={{ color: '#128391' }}>

@@ -29,17 +29,16 @@ export default function Home() {
 
     return (
         <Flex
-            justifyContent='space-between'
-            w={'full'}
-            h={'full'}
-            backgroundColor='#dee2e6'
-            pt='15px'
+            // justifyContent='space-between'
+            // maxW={'full'}
+            // h={'full'}
+            p='15px'
         >
-            <Stack>
-                <VStack>
+            <Stack w="30%" p="5px">
+                <VStack w={'100%'}>
                     <Profile hideControls={true} />
                     <Spacer />
-                    <Box maxW='100%'>
+                    <Box w='100%'>
                         <Card maxW='100%' alignItems='center'>
                             <CardHeader>
                                 <Flex spacing='4'>
@@ -47,19 +46,17 @@ export default function Home() {
                                 </Flex>
                             </CardHeader>
                             <CardBody>
-                                <Flex spacing='4'>
-                                    <Flex flex='1' gap='4' flexWrap='wrap' flexDirection='column' alignItems='flex-start'>
-                                        <Text>Title: {goal.goalDefinition?.title}</Text>
-                                        <Text>Start Date: {goal.startDate}</Text>
-                                        <Text>End Date:</Text>
-                                        <Text>Status: {goal.status}</Text>
-                                        <Text>Current Distance: {goal.currentDistance} miles</Text>
-                                        <Text>Total Distance: {goal.goalDefinition?.distance} miles</Text>
-                                        <Box p="2" h="300px" w="100%">
-                                            {goal.goalDefinition && <Map goal={goal} />}
-                                        </Box>
-                                    </Flex>
-                                </Flex>
+                                <VStack>
+                                    <Text>Title: {goal.goalDefinition?.title}</Text>
+                                    <Text>Start Date: {goal.startDate}</Text>
+                                    <Text>End Date:</Text>
+                                    <Text>Status: {goal.status}</Text>
+                                    <Text>Current Distance: {goal.currentDistance} miles</Text>
+                                    <Text>Total Distance: {goal.goalDefinition?.distance} miles</Text>
+                                    <Box p="2" h="300px" w="100%">
+                                        {goal.goalDefinition && <Map goal={goal} />}
+                                    </Box>
+                                </VStack>
                             </CardBody>
                         </Card>
                     </Box>
@@ -68,7 +65,9 @@ export default function Home() {
             {loadingPosts ? (
                 <div>Loading...</div>
             ) : (
-                <Posts posts={posts} />
+                <VStack w="70%" p="5px">
+                    <Posts posts={posts} />
+                </VStack>
             )
             }
         </Flex>
