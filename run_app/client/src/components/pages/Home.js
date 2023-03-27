@@ -29,9 +29,6 @@ export default function Home() {
 
     return (
         <Flex
-            // justifyContent='space-between'
-            // maxW={'full'}
-            // h={'full'}
             p='15px'
         >
             <Stack w="30%" p="5px">
@@ -65,7 +62,7 @@ export default function Home() {
             {loadingPosts ? (
                 <div>Loading...</div>
             ) : (
-                <VStack w="70%" p="5px">
+                <VStack w="60%" p="5px">
                     <Posts posts={posts} />
                 </VStack>
             )

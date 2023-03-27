@@ -2,6 +2,7 @@ import React from 'react';
 import Header from './components/Header';
 import './App.css';
 import { ChakraProvider } from '@chakra-ui/react';
+import theme from './theme/theme'
 import { ApolloClient, ApolloProvider, InMemoryCache, createHttpLink } from '@apollo/client'
 import { setContext } from '@apollo/client/link/context';
 import Content from './components/Content';
@@ -27,7 +28,7 @@ const client = new ApolloClient({
 
 function App() {
   return (
-    <ChakraProvider>
+    <ChakraProvider theme={theme}>
       <ApolloProvider client={client}>
         <div className="App">
           <Header />

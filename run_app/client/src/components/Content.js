@@ -36,8 +36,10 @@ function Content() {
     ]);
 
     return (
-        <Container maxW='1160px'>
-            <RouterProvider router={router} />
+        <Container maxW='full' backgroundColor='#dee2e6'>
+            <Container maxW='1280px'>
+                <RouterProvider router={router} />
+            </Container>
         </Container>
     );
 }

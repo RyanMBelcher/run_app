@@ -15,8 +15,7 @@ import {
     Image,
     Button,
     Link,
-    Textarea,
-    Divider
+    Textarea
 } from '@chakra-ui/react';
 import {
     CheckIcon,
@@ -26,6 +25,7 @@ import {
 import EditPostModal from './modals/EditPostModal';
 
 export default function Post({ post }) {
+    console.log('post', post);
     const [commentText, setCommentText] = useState('');
     const [addComment, { error: errorAddComment }] = useMutation(ADD_COMMENT);
     const [deleteComment, { error: errorDelComment }] = useMutation(DELETE_COMMENT);
@@ -84,28 +84,30 @@ export default function Post({ post }) {
             <Card maxW='100%' p='25px' flexDirection='column' key={post._id} >
                 <CardHeader>
                     <Flex spacing='4'>
-                        <Avatar src={post._id.profileImage} />
-                        <EditPostModal post={post} showButton={Auth.getProfile().data.username === post.username} />
-                        <Box>
-                            <Heading size='sm' >
-                                {Auth.getProfile().data.username === post.username &&
-                                    (<Link href='/me' _hover={{ color: '#128391' }}>{post.username}</Link>)
-                                }
+                        <Flex flex='1' gap='4' alignItems='center' flexWrap='wrap'>
+                            <Avatar src={post.userId.profileImage} />
+                            <Box>
+                                <Heading size='sm' >
+                                    {Auth.getProfile().data.username === post.username &&
+                                        (<Link href='/me' _hover={{ color: '#128391' }}>{post.username}</Link>)
+                                    }
 
-                                {Auth.getProfile().data.username !== post.username &&
-                                    (<Link href={`/profiles/${post.username}`} _hover={{ color: '#128391' }}>{post.username}</Link>)
-                                }
+                                    {Auth.getProfile().data.username !== post.username &&
+                                        (<Link href={`/profiles/${post.username}`} _hover={{ color: '#128391' }}>{post.username}</Link>)
+                                    }
+                                </Heading>
                                 <Text>
-                                    {post.title}
+                                    {post.createdAt}
                                 </Text>
-                            </Heading>
-                            <Text>
-                                {post.createdAt}
-                            </Text>
-                        </Box>
+                            </Box>
+                        </Flex>
+                        <EditPostModal post={post} showButton={Auth.getProfile().data.username === post.username} />
                     </Flex>
                 </CardHeader>
                 <CardBody>
+                    <Heading size='md'>
+                        {post.title}
+                    </Heading>
                     <Text>
                         {post.description}
                         <br />
@@ -156,7 +158,7 @@ export default function Post({ post }) {
 
                 {
                     post.comments.map((comment) => (
-                        <Card key={comment._id} mt='5' p='2'>
+                        <Card key={comment._id} mt='5' p='2' maxW='50%' justifyContent='center'>
                             <Text>{comment.username}</Text>
                             <Text>{comment.createdAt}</Text>
                             <Text>{comment.text}</Text>
@@ -170,6 +172,6 @@ export default function Post({ post }) {
                     ))
                 }
             </Card>
-        </Box>
+        </Box >
     )
 }
