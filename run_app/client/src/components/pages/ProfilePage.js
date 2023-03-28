@@ -1,43 +1,22 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useParams } from 'react-router-dom';
-import { useQuery, useMutation, useLazyQuery } from '@apollo/client';
+import { useQuery } from '@apollo/client';
 import {
     Box,
-    Button,
-    Modal,
-    ModalOverlay,
-    ModalContent,
-    ModalHeader,
-    ModalCloseButton,
-    ModalBody,
-    FormControl,
-    FormLabel,
-    Input,
-    ModalFooter,
-    Textarea,
-    useDisclosure,
     Card,
     CardHeader,
-    CardBody,
-    Text,
-    Avatar,
     Flex,
     Heading,
     Stack,
     VStack
 } from '@chakra-ui/react';
-import {
-    AddIcon
-} from '@chakra-ui/icons';
 import Auth from '../../utils/auth';
 import Profile from '../Profile';
 import Posts from '../Posts';
-import { GET_ME, GET_SINGLE_USER, GET_GOAL_BY_USER, GET_SINGLE_GOAL, GET_ALL_POSTS, GET_POST_BY_USER } from '../../utils/queries';
-import { ADD_GOAL, ADD_POST, DELETE_GOAL, DELETE_POST, EDIT_POST, EDIT_PROFILE, ADD_FOLLOWER, REMOVE_FOLLOWER } from '../../utils/mutations';
+import { GET_SINGLE_USER, GET_GOAL_BY_USER, GET_POST_BY_USER } from '../../utils/queries';
 import Map from '../Map';
 
 export default function ProfilePage() {
-
     const { username: userParam } = useParams();
     const authUsername = Auth.getProfile()?.data.username;
     const username = userParam || authUsername;
@@ -50,7 +29,7 @@ export default function ProfilePage() {
     });
     const { loading: loadingGoal, data: goalData } = useQuery(GET_GOAL_BY_USER, {
         variables: { username }
-    })
+    });
 
     const posts = postsData?.getPostByUser || [];
     const profile = data?.me || data?.getSingleUser || {};

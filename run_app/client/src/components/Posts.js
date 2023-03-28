@@ -1,5 +1,4 @@
 import React from 'react';
-import { VStack } from '@chakra-ui/react';
 import Post from './Post';
 
 export default function Posts({ posts }) {

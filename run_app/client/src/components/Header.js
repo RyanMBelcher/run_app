@@ -1,23 +1,13 @@
-import React, { useState } from 'react';
+import React from 'react';
 import {
     Box,
     Flex,
-    Breadcrumb,
-    BreadcrumbItem,
-    BreadcrumbLink,
-    BreadcrumbSeparator,
-    Stack,
-    HStack,
     Spacer,
     Heading,
-    Button,
     ButtonGroup,
     Link
 } from '@chakra-ui/react'
 import Auth from '../utils/auth';
-// import Home from './pages/Home';
-// import Login from './Login';
-// import Signup from './Signup';
 
 export default function Header() {
     return (

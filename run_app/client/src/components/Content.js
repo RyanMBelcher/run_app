@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import Landing from './pages/Landing';
-import Login from '../components/Login';
-import Signup from '../components/Signup';
+import Login from './pages/Login';
+import Signup from './pages/Signup';
 import Home from './pages/Home';
 import ProfilePage from './pages/ProfilePage';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';

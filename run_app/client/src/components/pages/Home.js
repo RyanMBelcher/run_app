@@ -1,7 +1,6 @@
-import React, { useState } from 'react';
-import { useParams } from 'react-router-dom';
-import { useQuery, useMutation, useLazyQuery } from '@apollo/client';
-import { GET_ALL_POSTS, GET_GOAL_BY_USER, GET_SINGLE_GOAL } from '../../utils/queries';
+import React from 'react';
+import { useQuery } from '@apollo/client';
+import { GET_ALL_POSTS, GET_GOAL_BY_USER } from '../../utils/queries';
 import {
     Card,
     CardHeader,
@@ -9,7 +8,6 @@ import {
     Box,
     Flex,
     Heading,
-    Avatar,
     Text,
     Stack,
     VStack,
@@ -24,14 +22,18 @@ export default function Home() {
     const { loading: loadingPosts, data: postsData } = useQuery(GET_ALL_POSTS);
     const posts = postsData?.getAllPosts || [];
 
-    const { loading: loadingGoal, data: goalData } = useQuery(GET_GOAL_BY_USER);
+    const { loading: loadingGoal, data: goalData } = useQuery(GET_GOAL_BY_USER, {
+        variables: {
+            username: Auth.getProfile().data.username
+        }
+    });
     const goal = goalData?.getGoalByUser?.[0] || {};
 
     return (
         <Flex
             p='15px'
         >
-            <Stack w="30%" p="5px">
+            <Stack w="30%" p="5px" m='5px'>
                 <VStack w={'100%'}>
                     <Profile hideControls={true} />
                     <Spacer />
@@ -62,7 +64,7 @@ export default function Home() {
             {loadingPosts ? (
                 <div>Loading...</div>
             ) : (
-                <VStack w="60%" p="5px">
+                <VStack w="60%" p="5px" m='5px'>
                     <Posts posts={posts} />
                 </VStack>
             )

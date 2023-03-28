@@ -26,8 +26,7 @@ const resolvers = {
             return goalDefinitions;
         },
         getGoalByUser: async (parent, args, context) => {
-
-            const goals = await Goal.find({ username: context.user.username }).populate('goalDefinition').populate('posts');
+            const goals = await Goal.find({ username: args.username }).populate('goalDefinition').populate('posts');
 
             return goals;
         },

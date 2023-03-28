@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useQuery, useMutation } from '@apollo/client';
 import { GET_ALL_GOAL_DEFINITIONS } from '../../utils/queries';
 import { ADD_GOAL } from '../../utils/mutations';
@@ -9,15 +9,9 @@ import {
     ModalHeader,
     ModalCloseButton,
     ModalBody,
-    FormControl,
-    FormLabel,
-    Input,
-    Textarea,
     ModalFooter,
     Button,
     useDisclosure,
-    InputGroup,
-    InputRightAddon,
     Text
 } from '@chakra-ui/react'
 

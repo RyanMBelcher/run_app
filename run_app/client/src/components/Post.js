@@ -81,7 +81,7 @@ export default function Post({ post }) {
 
     return (
         <Box w='100%'>
-            <Card maxW='100%' p='25px' flexDirection='column' key={post._id} >
+            <Card maxW='100%' p='25px' flexDirection='column' key={post._id} align='center'>
                 <CardHeader>
                     <Flex spacing='4'>
                         <Flex flex='1' gap='4' alignItems='center' flexWrap='wrap'>
@@ -143,13 +143,14 @@ export default function Post({ post }) {
                 <Textarea
                     placeholder='Comment'
                     value={commentText}
+                    maxW='75%'
                     onChange={(e) => setCommentText(e.target.value)}
                     mt='1'
                 />
                 <Button
                     backgroundColor='#FDC500'
                     _hover={{ bg: '#FFCE1F' }}
-                    size='sm'
+                    maxW='25%'
                     mt='2'
                     mb='2'
                     type='submit'
@@ -158,16 +159,18 @@ export default function Post({ post }) {
 
                 {
                     post.comments.map((comment) => (
-                        <Card key={comment._id} mt='5' p='2' maxW='50%' justifyContent='center'>
-                            <Text>{comment.username}</Text>
+                        <Card key={comment._id} mt='5' p='2' w='60%' justifyContent='center'>
+                            <Flex justifyContent='right'>
+                                <Button
+                                    variant='link'
+                                    _hover={{ color: '#3BBDC6' }}
+                                >
+                                    {Auth.getProfile().data.username === comment.username && <DeleteIcon onClick={() => { handleCommentDelete(comment._id, post._id) }} />}
+                                </Button>
+                            </Flex>
+                            <Heading size='xs'>{comment.username}</Heading>
                             <Text>{comment.createdAt}</Text>
                             <Text>{comment.text}</Text>
-                            <Button
-                                variant='link'
-                                _hover={{ color: '#3BBDC6' }}
-                            >
-                                {Auth.getProfile().data.username === comment.username && <DeleteIcon onClick={() => { handleCommentDelete(comment._id, post._id) }} />}
-                            </Button>
                         </Card>
                     ))
                 }

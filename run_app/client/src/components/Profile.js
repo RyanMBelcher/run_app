@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useParams } from 'react-router-dom';
-import { useQuery, useMutation, useLazyQuery } from '@apollo/client';
+import { useQuery, useMutation } from '@apollo/client';
 import {
     Card,
     CardHeader,
@@ -11,25 +11,12 @@ import {
     CardBody,
     Text,
     Box,
-    useDisclosure,
-    Modal,
-    ModalOverlay,
-    ModalContent,
-    ModalHeader,
-    ModalCloseButton,
-    ModalBody,
-    ModalFooter,
-    FormControl,
-    FormLabel,
-    Input,
-    InputGroup,
-    Textarea,
-    InputRightAddon,
     Link
 } from '@chakra-ui/react'
 import {
     AddIcon
 } from '@chakra-ui/icons';
+import Auth from '../utils/auth';
 import RunModal from './modals/RunModal';
 import EditProfileModal from './modals/EditProfileModal';
 import GoalModal from './modals/GoalModal';
@@ -38,9 +25,10 @@ import { ADD_FOLLOWER } from '../utils/mutations';
 import { GET_ME, GET_SINGLE_USER } from '../utils/queries';
 
 export default function Profile({ hideControls }) {
+    const { username: userParam } = useParams();
+    const authUsername = Auth.getProfile()?.data.username;
+    const username = userParam || authUsername;
 
-    const { username: userParam } = useParams()
-    console.log('userparam', userParam);
     const { loading, data } = useQuery(!userParam ? GET_ME : GET_SINGLE_USER, userParam ? {
         variables: { username: userParam },
     } : undefined);
@@ -64,7 +52,7 @@ export default function Profile({ hideControls }) {
                         <Flex flex='1' gap='4' alignItems='center' flexWrap='wrap'>
                             <Avatar src={profile.profileImage} />
                             <Link href='/me' _hover={{ color: '#128391' }}>
-                                <Heading size='md'>{profile.username} </Heading>
+                                <Heading size='md'>{username} </Heading>
                                 {userParam &&
                                     (
                                         <Button

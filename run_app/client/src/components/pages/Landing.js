@@ -7,12 +7,13 @@ import {
     Heading,
     Container
 } from '@chakra-ui/react'
-// import Auth from '../../utils/auth';
 import man_running_on_bridge from '../../images/man_running_on_bridge.png';
 
 export default function Landing() {
     return (
         <Flex
+            w='full'
+            h='100vh'
             flexDir='column'
         >
             <Heading m='15px'>Welcome to the App!</Heading>

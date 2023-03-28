@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import Axios from 'axios';
-import { useMutation, useQuery } from '@apollo/client';
-// import { useParams } from 'react-router-dom';
+import { useMutation } from '@apollo/client';
 import {
     Modal,
     ModalOverlay,
@@ -23,19 +22,12 @@ import {
     EditIcon
 } from '@chakra-ui/icons'
 import { EDIT_POST } from '../../utils/mutations';
-// import { GET_ME, GET_SINGLE_USER } from '../../utils/queries';
 
 export default function EditPostModal({ post, showButton }) {
     const [imageSelected, setImageSelected] = useState('');
     const [formProfile, setFormProfile] = useState({ bio: '', profileImage: '' });
 
     const { isOpen: isOpenEditPost, onOpen: onOpenEditPost, onClose: onCloseEditPost } = useDisclosure();
-
-    // const { username: userParam } = useParams()
-    // const { loading, data } = useQuery(!userParam ? GET_ME : GET_SINGLE_USER, {
-    //     variables: { username: userParam },
-    // });
-    // const profile = data?.me || data?.getSingleUser || {};
 
     const [formPost, setFormPost] = useState({ title: post.title, description: post.description, distance: post.distance, postImage: post.image });
 
