@@ -12,12 +12,13 @@ export default function Map({ goal }) {
 
     useEffect(() => {
         if (loaded) {
+            console.log(process.env);
             let map = new mapboxgl.Map({
                 container: 'map',
                 center: goal.currentLocation,
                 zoom: 3,
                 style: 'mapbox://styles/rbelcher86/clf4ixsl1006o01qkcxzpffm0',
-                accessToken: 'pk.eyJ1IjoicmJlbGNoZXI4NiIsImEiOiJjbGYxOXBtMzkwMXE3M3dxa3FnMmI5dXd4In0.RSfTXdlifISPOcZ5xO5ucg'
+                accessToken: process.env.REACT_APP_MAPBOX_KEY
             });
 
             map.addControl(
