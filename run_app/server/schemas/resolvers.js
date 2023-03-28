@@ -222,7 +222,6 @@ const resolvers = {
                 goalDefinition: goalDefinition._id
             });
 
-
             const updatedUser = await User.findOneAndUpdate(
                 { _id: context.user._id },
                 {
@@ -252,16 +251,10 @@ const resolvers = {
 
         addPost: async (parent, { postInfo }, context) => {
             const currentGoal = await Goal.findOne({ _id: postInfo.goalId }).populate('goalDefinition');
-            console.log(currentGoal);
-            console.log('current location', currentGoal.currentLocation);
             const path = turf.lineString(currentGoal.goalDefinition.coordinates);
             const newCurrentDistance = currentGoal.currentDistance + postInfo.distance;
-            const percentageDone = newCurrentDistance / currentGoal.goalDefinition.distance;
-            console.log('percentageDone', percentageDone);
             const alongPath = turf.along(path, newCurrentDistance, { options: 'miles' });
-            console.warn('alongPath', alongPath);
             const newCurrentLocation = alongPath.geometry.coordinates;
-            console.log('new current location', newCurrentLocation);
             const post = await Post.create({
                 title: postInfo.title,
                 description: postInfo.description,

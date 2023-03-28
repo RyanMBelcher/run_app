@@ -22,12 +22,17 @@ import {
 
 import { ADD_POST } from '../../utils/mutations';
 import { GET_GOAL_BY_USER } from '../../utils/queries';
+import Auth from '../../utils/auth';
 
 export default function RunModal() {
 
     const { isOpen: isOpenPost, onOpen: onOpenPost, onClose: onClosePost } = useDisclosure();
 
-    const { loading: loadingGoal, data: goalData } = useQuery(GET_GOAL_BY_USER);
+    const { loading: loadingGoal, data: goalData } = useQuery(GET_GOAL_BY_USER, {
+        variables: {
+            username: Auth.getProfile().data.username
+        }
+    });
     const goal = goalData?.getGoalByUser?.[0] || {};
 
     const [postTitle, setPostTitle] = useState('');

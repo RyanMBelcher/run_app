@@ -31,7 +31,7 @@ const SignupForm = () => {
 
     const handleFormSubmit = async (e) => {
         e.preventDefault();
-        console.log(userFormData);
+
         const form = e.currentTarget;
         if (form.checkValidity() === false) {
             e.preventDefault();
@@ -40,7 +40,7 @@ const SignupForm = () => {
 
         try {
             const result = await addUser({ variables: { ...userFormData } });
-            console.log(result);
+
             Auth.login(result.data.addUser.token);
         } catch (error) {
             console.error(error);
@@ -79,7 +79,7 @@ const SignupForm = () => {
                         color='#fff'
                         borderColor='#FDC500'
                         focusBorderColor='#3BBDC6'
-                        placeholder='Your Username'
+                        placeholder='Username'
                         _placeholder={{ color: 'inherit' }}
                         name='username'
                         onChange={handleInputChange}
@@ -94,7 +94,7 @@ const SignupForm = () => {
                         color='#fff'
                         borderColor='#FDC500'
                         focusBorderColor='#3BBDC6'
-                        placeholder='Your email address'
+                        placeholder='Email Address'
                         _placeholder={{ color: 'inherit' }}
                         name='email'
                         onChange={handleInputChange}
@@ -112,7 +112,7 @@ const SignupForm = () => {
                             focusBorderColor='#3BBDC6'
                             name='password'
                             pr='4.5rem'
-                            placeholder='Enter password'
+                            placeholder='Password'
                             _placeholder={{ color: 'inherit' }}
                             onChange={handleInputChange}
                             value={userFormData.password}
@@ -126,7 +126,7 @@ const SignupForm = () => {
                     </InputGroup>
                     <Button
                         type='submit'
-                        onSubmit={handleFormSubmit}
+                        onClick={handleFormSubmit}
                         backgroundColor='#FDC500'
                         _hover={{ bg: '#FFCE1F' }}
                         p={5}
