@@ -36,13 +36,15 @@ const resolvers = {
         },
         getAllPosts: async (parent, args) => {
             const posts = await Post.find({}).populate('comments').populate('goalId').populate('userId').populate('likes');
-            const sortedPosts = posts.sort((a, b) => a.createdAt - b.createdAt);
+            const sortedPosts = posts.sort((a, b) => b.created_at.getTime() - a.created_at.getTime());
             return sortedPosts;
         },
         getPostByUser: async (parent, { username }) => {
             const posts = await Post.find({ username }).populate('comments').populate('goalId');
-            const sortedPosts = posts.sort((a, b) => a.createdAt - b.createdAt);
-            console.log('posts', posts)
+            const sortedPosts = posts.sort((a, b) => {
+                const sort = b.created_at.getTime() - a.created_at.getTime();
+                return sort;
+            });
             return sortedPosts;
         },
         getSinglePost: async (parent, { postId }) => {

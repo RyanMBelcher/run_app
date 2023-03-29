@@ -1,0 +1,18 @@
+{
+  "files": {
+    "main.css": "/static/css/main.fc29511d.css",
+    "main.js": "/static/js/main.315f2117.js",
+    "static/js/787.5e7694e9.chunk.js": "/static/js/787.5e7694e9.chunk.js",
+    "static/media/personrunning.png": "/static/media/personrunning.4f89a0b5cac0a3222c9b.png",
+    "static/media/man_running_on_bridge.png": "/static/media/man_running_on_bridge.696538856a6d7a5ad2a1.png",
+    "static/media/manrunning.png": "/static/media/manrunning.89b2e443a59c048114ec.png",
+    "index.html": "/index.html",
+    "main.fc29511d.css.map": "/static/css/main.fc29511d.css.map",
+    "main.315f2117.js.map": "/static/js/main.315f2117.js.map",
+    "787.5e7694e9.chunk.js.map": "/static/js/787.5e7694e9.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.fc29511d.css",
+    "static/js/main.315f2117.js"
+  ]
+}

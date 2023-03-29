@@ -51,7 +51,7 @@ export default function ProfilePage() {
             </Stack>
             <Stack w='30%' p='5px'>
                 <VStack w='100%'>
-                    <Card>
+                    <Card w='100%'>
                         <CardHeader>
                             <Heading>Progress Map</Heading>
                         </CardHeader>

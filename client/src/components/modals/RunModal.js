@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useMutation, useQuery } from '@apollo/client';
+import { useMutation, useQuery, useLazyQuery } from '@apollo/client';
 import Axios from 'axios';
 import {
     Modal,
@@ -21,11 +21,10 @@ import {
 } from '@chakra-ui/react'
 
 import { ADD_POST } from '../../utils/mutations';
-import { GET_GOAL_BY_USER } from '../../utils/queries';
+import { GET_GOAL_BY_USER, GET_POST_BY_USER } from '../../utils/queries';
 import Auth from '../../utils/auth';
 
 export default function RunModal() {
-
     const { isOpen: isOpenPost, onOpen: onOpenPost, onClose: onClosePost } = useDisclosure();
 
     const { loading: loadingGoal, data: goalData } = useQuery(GET_GOAL_BY_USER, {
@@ -67,7 +66,6 @@ export default function RunModal() {
                     }
                 }
             });
-
             onClosePost();
         } catch (err) {
             console.log(err);
